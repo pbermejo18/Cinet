@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "807301419772",
+    "project_id": "cinet-cc0f5",
+    "storage_bucket": "cinet-cc0f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807301419772:android:955b1409fa74e01ac5bd79",
+        "android_client_info": {
+          "package_name": "com.example.cinet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807301419772-36d7d0bsdklj3d7cnpp813m9u4iuakvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVXMiTglPTk_iDugx_bwZO22mCs49XPMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807301419772-36d7d0bsdklj3d7cnpp813m9u4iuakvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
