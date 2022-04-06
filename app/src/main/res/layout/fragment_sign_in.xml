@@ -2,13 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +21,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login with email/password"/>
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10px"
+            android:text="Iniciar sesión"/>
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
@@ -32,14 +36,21 @@
             android:hint="Password"/>
         <Button
             android:id="@+id/emailSignInButton"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Sign In"/>
+            android:layout_marginBottom="25dp"
+            android:text="Entrar"/>
+
         <TextView
-            android:id="@+id/gotoCreateAccountTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create account here"/>
+            android:gravity="center_horizontal"
+            android:text="Iniciar sesión con Google"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSignInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <View
             android:layout_width="match_parent"
@@ -47,21 +58,23 @@
             android:layout_margin="48dp"/>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login with your Google account"/>
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/googleSignInButton"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:foregroundGravity="center"
+            android:text="No tienes cuenta ?"/>
 
-    <ProgressBar
-        android:id="@+id/signInProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/gotoCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="bottom"
+            android:text="Regístrate" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

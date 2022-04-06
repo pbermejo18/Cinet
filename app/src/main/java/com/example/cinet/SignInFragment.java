@@ -47,7 +47,6 @@ public class SignInFragment extends Fragment {
     protected EditText emailEditText, passwordEditText;
     protected Button emailSignInButton;
     protected LinearLayout signInForm;
-    protected ProgressBar signInProgressBar;
 
     protected FirebaseAuth mAuth;
 
@@ -66,7 +65,7 @@ public class SignInFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
-        view.findViewById(R.id.gotoCreateAccountTextView).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.gotoCreateAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.registerFragment);
@@ -77,7 +76,6 @@ public class SignInFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.passwordEditText);
         emailSignInButton = view.findViewById(R.id.emailSignInButton);
         signInForm = view.findViewById(R.id.signInForm);
-        signInProgressBar = view.findViewById(R.id.signInProgressBar);
 
         emailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +118,6 @@ public class SignInFragment extends Fragment {
 
     private void accederConEmail() {
         signInForm.setVisibility(View.GONE);
-        signInProgressBar.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
@@ -132,7 +129,6 @@ public class SignInFragment extends Fragment {
                             Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
                         }
                         signInForm.setVisibility(View.VISIBLE);
-                        signInProgressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -154,23 +150,21 @@ public class SignInFragment extends Fragment {
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         if(acct == null) return;
-        signInProgressBar.setVisibility(View.VISIBLE);
         signInForm.setVisibility(View.GONE);
         mAuth.signInWithCredential(GoogleAuthProvider.getCredential(acct.getIdToken(
         ), null))
-           .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-               @Override
-               public void onComplete(@NonNull Task<AuthResult> task) {
-                   if (task.isSuccessful()) {
-                       Log.e("ABCD", "signInWithCredential:success");
-                       actualizarUI(mAuth.getCurrentUser());
-                   } else {
-                       Log.e("ABCD", "signInWithCredential:failure",
-                               task.getException());
-                       signInProgressBar.setVisibility(View.GONE);
-                       signInForm.setVisibility(View.VISIBLE);
-                   }
-               }
-           });
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.e("ABCD", "signInWithCredential:success");
+                            actualizarUI(mAuth.getCurrentUser());
+                        } else {
+                            Log.e("ABCD", "signInWithCredential:failure",
+                                    task.getException());
+                            signInForm.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 }
