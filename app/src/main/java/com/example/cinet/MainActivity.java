@@ -3,9 +3,12 @@ package com.example.cinet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -13,10 +16,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -26,8 +31,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    Fragment fragment=null;
-    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,38 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+
+        NavigationView navigationView = binding.navView;
+        View header = navigationView.getHeaderView(0);
+        final ImageView photo = header.findViewById(R.id.photoImageView);
+        final TextView name = header.findViewById(R.id.displayNameTextView);
+        final TextView email = header.findViewById(R.id.emailTextView);
+
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if(user != null){
+                    if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null) {
+                        Glide.with(MainActivity.this)
+                                .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString())
+                                .circleCrop()
+                                .into(photo);
+                        name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    } else {
+                        Glide.with(MainActivity.this)
+                                .load(R.drawable.perfil)
+                                .circleCrop()
+                                .into(photo);
+                        name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    }
+                }
+            }
+        });
 
     }
 

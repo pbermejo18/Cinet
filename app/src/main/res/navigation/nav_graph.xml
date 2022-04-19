@@ -26,4 +26,19 @@
         android:name="com.example.cinet.PerfilFragment"
         android:label="fragment_perfil"
         tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/estrenosFragment"
+        android:name="com.example.cinet.EstrenosFragment"
+        android:label="fragment_estrenos"
+        tools:layout="@layout/fragment_estrenos" />
+    <fragment
+        android:id="@+id/proximosFragment"
+        android:name="com.example.cinet.ProximosFragment"
+        android:label="fragment_proximos"
+        tools:layout="@layout/fragment_proximos" />
+    <fragment
+        android:id="@+id/carteleraFragment"
+        android:name="com.example.cinet.CarteleraFragment"
+        android:label="fragment_cartelera"
+        tools:layout="@layout/fragment_cartelera" />
 </navigation>
