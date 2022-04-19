@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_main.xml" value="0.35052083333333334" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_home.xml" value="0.176" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_main.xml" value="0.23832528180354268" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/drawer_header.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/drawer_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_perfil.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_sign_in.xml" value="0.152" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/menu/drawer_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

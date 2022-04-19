@@ -20,4 +20,10 @@
         android:name="com.example.cinet.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.cinet.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>
