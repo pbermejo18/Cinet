@@ -8,37 +8,37 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.cinet.HomeFragment"
-        android:label="fragment_home"
+        android:label="Cinet"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.cinet.SignInFragment"
-        android:label="fragment_sign_in"
+        android:label="Cinet"
         tools:layout="@layout/fragment_sign_in" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.cinet.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Cinet"
         tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.example.cinet.PerfilFragment"
-        android:label="fragment_perfil"
+        android:label="Cinet"
         tools:layout="@layout/fragment_perfil" />
     <fragment
         android:id="@+id/estrenosFragment"
         android:name="com.example.cinet.EstrenosFragment"
-        android:label="fragment_estrenos"
+        android:label="Cinet"
         tools:layout="@layout/fragment_estrenos" />
     <fragment
         android:id="@+id/proximosFragment"
         android:name="com.example.cinet.ProximosFragment"
-        android:label="fragment_proximos"
+        android:label="Cinet"
         tools:layout="@layout/fragment_proximos" />
     <fragment
         android:id="@+id/carteleraFragment"
         android:name="com.example.cinet.CarteleraFragment"
-        android:label="fragment_cartelera"
+        android:label="Cinet"
         tools:layout="@layout/fragment_cartelera" />
 </navigation>

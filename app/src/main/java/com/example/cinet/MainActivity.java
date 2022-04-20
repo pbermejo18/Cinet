@@ -1,17 +1,13 @@
 package com.example.cinet;
 
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,13 +15,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.ActivityMainBinding;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
 
@@ -39,8 +31,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView((binding = binding.inflate(getLayoutInflater())).getRoot());
 
         setSupportActionBar(binding.toolbar);
-        // getSupportActionBar().hide();
+
         NavController navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
+
+        // ocultar y ver toolbar
+        navController.addOnDestinationChangedListener((navController1, navDestination, bundle) -> {
+            if (navDestination.getId() == R.id.signInFragment || navDestination.getId() == R.id.registerFragment) {
+                // getSupportActionBar().hide();
+                binding.toolbar.setVisibility(View.GONE);
+            } else {
+                binding.toolbar.setVisibility(View.VISIBLE);
+            }
+        });
 
         // draw menu
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
-
+        // imagen + info del usuario
         NavigationView navigationView = binding.navView;
         View header = navigationView.getHeaderView(0);
         final ImageView photo = header.findViewById(R.id.photoImageView);
@@ -84,10 +86,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
-
-    /*public void homeact(View view) {
-        startActivity(new Intent(this, HomeActivity.class));
-    }*/
 }

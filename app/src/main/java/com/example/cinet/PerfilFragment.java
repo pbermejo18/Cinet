@@ -40,10 +40,17 @@ public class PerfilFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(user != null){
-            displayNameTextView.setText(user.getDisplayName());
-            emailTextView.setText(user.getEmail());
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null) {
+                displayNameTextView.setText(user.getDisplayName());
+                emailTextView.setText(user.getEmail());
 
-            Glide.with(requireView()).load(user.getPhotoUrl()).into(photoImageView);
+                Glide.with(requireView()).load(user.getPhotoUrl()).into(photoImageView);
+            } else {
+                displayNameTextView.setText(user.getDisplayName());
+                emailTextView.setText(user.getEmail());
+
+                Glide.with(requireView()).load(R.drawable.perfil).into(photoImageView);
+            }
         }
     }
 }
