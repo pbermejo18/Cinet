@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +29,7 @@ public class RegisterFragment extends Fragment {
     protected EditText emailEditText, passwordEditText;
     private Button registerButton;
     private FirebaseAuth mAuth;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public RegisterFragment() {}
 
@@ -67,6 +69,7 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             actualizarUI(mAuth.getCurrentUser());
                         } else {
                             Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
@@ -79,9 +82,11 @@ public class RegisterFragment extends Fragment {
     }
 
     private void actualizarUI(FirebaseUser currentUser) {
-        if(currentUser != null){
-            navController.navigate(R.id.homeFragment);
-        }
+        currentUser.sendEmailVerification();
+
+        navController.navigate(R.id.signInFragment);
+        Toast toast = Toast.makeText(getActivity(), "Verifica el correo electrónico para poder acceder", Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private boolean validarFormulario() {

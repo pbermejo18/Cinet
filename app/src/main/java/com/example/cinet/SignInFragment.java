@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -134,9 +136,12 @@ public class SignInFragment extends Fragment {
     }
 
     private void actualizarUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
+        if (currentUser != null && currentUser.isEmailVerified()) {
             navController.navigate(R.id.homeFragment);
-        } // else navController.navigate(R.id.registerFragment);
+        } else {
+            Toast toast = Toast.makeText(getActivity(), "Comprueba tu correo electrónico para poder acceder", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     private void accederConGoogle() {
