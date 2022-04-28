@@ -11,6 +11,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/peliculasRecyclerView"
         android:layout_width="match_parent"
+        android:paddingLeft="9dp"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
