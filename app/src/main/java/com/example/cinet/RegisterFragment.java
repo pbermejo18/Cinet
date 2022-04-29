@@ -14,22 +14,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cinet.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.Objects;
 
 public class RegisterFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    protected EditText emailEditText, passwordEditText;
+    protected EditText emailEditText, passwordEditText, nombreEditText;
     private Button registerButton;
     private FirebaseAuth mAuth;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public RegisterFragment() {}
 
@@ -47,6 +52,7 @@ public class RegisterFragment extends Fragment {
 
         emailEditText = view.findViewById(R.id.emailEditText);
         passwordEditText = view.findViewById(R.id.passwordEditText);
+        nombreEditText = view.findViewById(R.id.nombreEditText);
 
         registerButton = view.findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +75,12 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             actualizarUI(mAuth.getCurrentUser());
                         } else {
                             Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
 
                         }
+
                         registerButton.setEnabled(true);
                     }
                 });
@@ -83,8 +89,14 @@ public class RegisterFragment extends Fragment {
 
     private void actualizarUI(FirebaseUser currentUser) {
         currentUser.sendEmailVerification();
+        // Dar nombre al user
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(nombreEditText.getText().toString())
+                .build();
+        currentUser.updateProfile(profileUpdates);
 
         navController.navigate(R.id.signInFragment);
+        // mensaje de recuerdo para verificar
         Toast toast = Toast.makeText(getActivity(), "Verifica el correo electrónico para poder acceder", Toast.LENGTH_LONG);
         toast.show();
     }
@@ -104,6 +116,13 @@ public class RegisterFragment extends Fragment {
             valid = false;
         } else {
             passwordEditText.setError(null);
+        }
+
+        if (TextUtils.isEmpty(nombreEditText.getText().toString())) {
+            nombreEditText.setError("Required.");
+            valid = false;
+        } else {
+            nombreEditText.setError(null);
         }
 
         return valid;
