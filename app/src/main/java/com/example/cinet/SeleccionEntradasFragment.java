@@ -32,6 +32,7 @@ public class SeleccionEntradasFragment extends Fragment {
         // Menu desplegable
         Spinner spinnerLanguages =view.findViewById(R.id.spinner_cantidad_entradas);
         ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, android.R.layout.simple_spinner_item);
+            // Modificar texto spinner: https://www.geeksforgeeks.org/how-to-change-spinner-text-style-in-android/
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerLanguages.setAdapter(adapter);
     }
