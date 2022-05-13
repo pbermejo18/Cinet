@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
 public class MostrarPeliculaFragment extends Fragment {
     FragmentMostrarPeliculaBinding binding;
     PeliculasViewModel elementosViewModel;
+    NavController navController;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return (binding = FragmentMostrarPeliculaBinding.inflate(inflater, container, false)).getRoot();
@@ -29,6 +33,7 @@ public class MostrarPeliculaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
          //= new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
+        navController = Navigation.findNavController(view);
         elementosViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
 
         elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Post>() {
@@ -41,6 +46,12 @@ public class MostrarPeliculaFragment extends Fragment {
             }
         });
 
+        binding.irAPantallaComprarEntrada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.seleccionEntradasFragment);
+            }
+        });
 
     }
 }

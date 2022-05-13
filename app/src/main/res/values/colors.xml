@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="statusbar">#2c0169</color>
+    <color name="rosa_fondo">#a800ba</color>
 
 </resources>

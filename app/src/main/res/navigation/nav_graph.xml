@@ -44,6 +44,10 @@
     <fragment
         android:id="@+id/mostrarPeliculaFragment"
         android:name="com.example.cinet.MostrarPeliculaFragment"
-        android:label="fragment_mostrar_pelicula"
         tools:layout="@layout/fragment_mostrar_pelicula" />
+    <fragment
+        android:id="@+id/seleccionEntradasFragment"
+        android:name="com.example.cinet.SeleccionEntradasFragment"
+        android:label="Cinet"
+        tools:layout="@layout/fragment_seleccion_entradas" />
 </navigation>
