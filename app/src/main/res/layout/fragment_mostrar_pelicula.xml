@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
+    android:background="@drawable/bg_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
@@ -21,29 +22,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:textColor="#d3c3db"
+        android:textStyle="bold"
         android:textSize="28sp"/>
+
     <RatingBar
         android:id="@+id/valoracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"/>
+        android:numStars="5"
+        android:progressTint="#FFEE00" />
     <TextView
         android:id="@+id/descripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:textColor="#d3c3db"
         android:textSize="14sp"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/irAPantallaComprarEntrada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:backgroundTint="@color/rosa_fondo"
-        android:background="@color/rosa_fondo"
-        app:backgroundTint="@color/rosa_fondo"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/compra"
-        app:rippleColor="@color/white"/>
+        android:clickable="true"
+        app:backgroundTint="@color/purple_500"
+        app:tint="#EEE"
+        app:srcCompat="@drawable/compra" />
 </LinearLayout>
 </ScrollView>

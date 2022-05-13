@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -15,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-import com.bumptech.glide.Glide;
-
 
 public class SeleccionEntradasFragment extends Fragment {
     NavController navController;
@@ -32,12 +27,11 @@ public class SeleccionEntradasFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //= new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
         navController = Navigation.findNavController(view);
 
         // Menu desplegable
-        Spinner spinnerLanguages=view.findViewById(R.id.spinner_cantidad_entradas);
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, android.R.layout.simple_spinner_item);
+        Spinner spinnerLanguages =view.findViewById(R.id.spinner_cantidad_entradas);
+        ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerLanguages.setAdapter(adapter);
     }

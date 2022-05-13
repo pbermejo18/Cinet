@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ocultar y ver toolbar
         navController.addOnDestinationChangedListener((navController1, navDestination, bundle) -> {
-            if (navDestination.getId() == R.id.signInFragment || navDestination.getId() == R.id.registerFragment) {
+            if (navDestination.getId() == R.id.signInFragment || navDestination.getId() == R.id.registerFragment /* || navDestination.getId() == R.id.seleccionEntradasFragment */) {
                 // getSupportActionBar().hide();
                 binding.toolbar.setVisibility(View.GONE);
             } else {
