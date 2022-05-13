@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +26,7 @@ public class ProximosFragment extends Fragment {
 
     NavController navController;
     RecyclerView.LayoutManager mLayoutManager;
+    PeliculasViewModel peliculasViewModel;
 
     public ProximosFragment() {}
 
@@ -39,6 +41,7 @@ public class ProximosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // navController = Navigation.findNavController(view);  // <-----------------
+        peliculasViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.peliculasRecyclerView);
         // posición de las películas
@@ -67,6 +70,15 @@ public class ProximosFragment extends Fragment {
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post post) {
             Glide.with(getContext()).load(post.imagen).into(holder.peliculaPhotoImageView);
+
+           holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    peliculasViewModel.seleccionar(post); //
+                    navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.mostrarPeliculaFragment);
+                }
+           });
         }
 
         class PostViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +86,12 @@ public class ProximosFragment extends Fragment {
             PostViewHolder(@NonNull View itemView) {
                 super(itemView);
                 peliculaPhotoImageView = itemView.findViewById(R.id.peliculaphotoImageView);
+                /*itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        navController.navigate(R.id.homeFragment);
+                    }
+                });*/
             }
         }
     }
