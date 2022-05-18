@@ -120,7 +120,7 @@ public class SeleccionButacasFragment extends Fragment {
                 intentradas --;
                 System.out.println(intentradas);
             } else {
-                Toast toast = Toast.makeText(getActivity(), "No le quedan entradas por seleccionar!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getActivity(), "No quedan entradas por seleccionar!", Toast.LENGTH_LONG);
                 toast.show();
             }
         } else {

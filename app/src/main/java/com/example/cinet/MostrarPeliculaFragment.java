@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 
 import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MostrarPeliculaFragment extends Fragment {
     FragmentMostrarPeliculaBinding binding;
@@ -35,6 +36,10 @@ public class MostrarPeliculaFragment extends Fragment {
          //= new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
         navController = Navigation.findNavController(view);
         elementosViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
+
+        if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
+            binding.deleteFloatButton.setVisibility(View.VISIBLE);
+        }
 
         elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Post>() {
             @Override

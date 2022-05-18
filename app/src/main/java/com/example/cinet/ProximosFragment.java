@@ -17,8 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.cinet.databinding.FragmentProximosBinding;
+import com.example.cinet.databinding.FragmentSeleccionButacasBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -27,13 +31,14 @@ public class ProximosFragment extends Fragment {
     NavController navController;
     RecyclerView.LayoutManager mLayoutManager;
     PeliculasViewModel peliculasViewModel;
+    FragmentProximosBinding binding;
 
     public ProximosFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_proximos, container, false);
+        return (binding = FragmentProximosBinding.inflate(inflater, container, false)).getRoot();
     }
 
     @Override
@@ -42,6 +47,11 @@ public class ProximosFragment extends Fragment {
 
         // navController = Navigation.findNavController(view);  // <-----------------
         peliculasViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
+
+
+        if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
+            binding.addFloatButton.setVisibility(View.VISIBLE);
+        }
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.peliculasRecyclerView);
         // posición de las películas
