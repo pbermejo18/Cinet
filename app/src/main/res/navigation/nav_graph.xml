@@ -55,4 +55,9 @@
         android:name="com.example.cinet.SeleccionButacasFragment"
         android:label="Cinet"
         tools:layout="@layout/fragment_seleccion_butacas" />
+    <fragment
+        android:id="@+id/signOutFragment"
+        android:name="com.example.cinet.SignOutFragment"
+        android:label="fragment_sign_out"
+        tools:layout="@layout/fragment_sign_out" />
 </navigation>

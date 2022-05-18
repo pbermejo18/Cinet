@@ -9,9 +9,9 @@
         android:id="@+id/perfilFragment"
         android:icon="@drawable/perfil"
         android:title="Perfil" />
-<!--
+
     <item
-        android:id="@+id/drawer3Fragment"
-        android:icon="@android:drawable/ic_menu_directions"
-        android:title="Drawer 3" /> -->
+        android:id="@+id/signOutFragment"
+        android:icon="@android:drawable/ic_lock_idle_charging"
+        android:title="Cerrar sesión" />
 </menu>
