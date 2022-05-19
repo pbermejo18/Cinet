@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.Spinner;
 
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
@@ -27,7 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SeleccionEntradasFragment extends Fragment {
     FragmentSeleccionEntradasBinding binding;
+    Bundle result = new Bundle();
     NavController navController;
+    CalendarView calendarView;
+    String curDate;
     public String nentradas;
     public String hentradas;
 
@@ -48,6 +52,16 @@ public class SeleccionEntradasFragment extends Fragment {
         navController = Navigation.findNavController(view);
         reference = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
+        calendarView=view.findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                curDate = String.valueOf(dayOfMonth);
+                result.putString("calendar", String.valueOf(dayOfMonth + "/" + month + "/" + year));
+            }
+        });
+
         // Menu desplegable
         Spinner spinnerNEntradas =view.findViewById(R.id.spinner_cantidad_entradas);
         ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, R.layout.entradas_spinner);
@@ -59,6 +73,7 @@ public class SeleccionEntradasFragment extends Fragment {
 
         spinnerNEntradas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // database query
                 Query query = reference.child("2LJaKLPp8AAxfTD2yyxO").orderByChild("Entradas");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -73,9 +88,7 @@ public class SeleccionEntradasFragment extends Fragment {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
+                    public void onCancelled(DatabaseError databaseError) { }
                 });
 
                 nentradas = (String) spinnerNEntradas.getSelectedItem();
@@ -83,9 +96,10 @@ public class SeleccionEntradasFragment extends Fragment {
 
                 hentradas = (String) spinner_hora_entradas.getSelectedItem();
 
-                Bundle result = new Bundle();
+
                 result.putString("nentradas", nentradas.toString().trim());
                 result.putString("horaentradas", hentradas.toString().trim());
+                //result.putString("calendar", curDate.toString().trim());
                 getParentFragmentManager().setFragmentResult("key",result);
             }
             public void onNothingSelected(AdapterView<?> parent) { }

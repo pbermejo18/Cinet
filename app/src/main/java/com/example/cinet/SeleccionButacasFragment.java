@@ -28,8 +28,8 @@ import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
 
 public class SeleccionButacasFragment extends Fragment {
     NavController navController;
-    TextView textViewNEntradas, preciototal, hora_entrada_txv;
-    String nentradas, horaentrada;
+    TextView textViewNEntradas, preciototal, hora_entrada_txv, calendar_value;
+    String nentradas, horaentrada, calendarval;
     int intentradas;
     FragmentSeleccionButacasBinding binding;
 
@@ -47,6 +47,9 @@ public class SeleccionButacasFragment extends Fragment {
 
                 horaentrada = bundle.getString("horaentradas");
                 hora_entrada_txv.setText(horaentrada);
+
+                calendarval = bundle.getString("calendar");
+                calendar_value.setText(calendarval);
             }
         });
     }
@@ -67,6 +70,7 @@ public class SeleccionButacasFragment extends Fragment {
         textViewNEntradas = view.findViewById(R.id.nentradas);
         preciototal = view.findViewById(R.id.preciototal);
         hora_entrada_txv = view.findViewById(R.id.hora_entrada_txv);
+        calendar_value = view.findViewById(R.id.calendar_value);
 
         binding.butacaA1.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
         binding.butacaA2.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
