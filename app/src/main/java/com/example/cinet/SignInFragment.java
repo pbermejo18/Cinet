@@ -122,18 +122,24 @@ public class SignInFragment extends Fragment {
     private void accederConEmail() {
         signInForm.setVisibility(View.GONE);
 
-        mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            actualizarUI(mAuth.getCurrentUser());
-                        } else {
-                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+        if (emailEditText.getText().toString().isEmpty() || passwordEditText.getText().toString().isEmpty()) {
+            Toast toast = Toast.makeText(getActivity(), "Introduce la información necesaria", Toast.LENGTH_LONG);
+            toast.show();
+            signInForm.setVisibility(View.VISIBLE);
+        } else {
+            mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
+                    .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                actualizarUI(mAuth.getCurrentUser());
+                            } else {
+                                Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+                            }
+                            signInForm.setVisibility(View.VISIBLE);
                         }
-                        signInForm.setVisibility(View.VISIBLE);
-                    }
-                });
+                    });
+        }
     }
 
     private void actualizarUI(FirebaseUser currentUser) {

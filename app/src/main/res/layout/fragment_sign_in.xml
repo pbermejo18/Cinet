@@ -114,6 +114,7 @@
         android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:text="Regístrate"
+        android:textColor="#00d0fa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.075"
