@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class PerfilFragment extends Fragment {
 
@@ -43,7 +44,12 @@ public class PerfilFragment extends Fragment {
             if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null) {
                 displayNameTextView.setText(user.getDisplayName());
                 emailTextView.setText(user.getEmail());
-
+/*
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(nombreEditText.getText().toString())
+                        .build();
+                currentUser.updateProfile(profileUpdates);
+*/
                 Glide.with(requireView()).load(user.getPhotoUrl()).into(photoImageView);
             } else {
                 displayNameTextView.setText(user.getDisplayName());
