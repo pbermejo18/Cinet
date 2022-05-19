@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,7 +49,7 @@ public class SignInFragment extends Fragment {
 
     protected EditText emailEditText, passwordEditText;
     protected Button emailSignInButton;
-    protected LinearLayout signInForm;
+    protected ConstraintLayout signInForm;
 
     protected FirebaseAuth mAuth;
 
