@@ -18,11 +18,20 @@ import android.widget.Spinner;
 
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
 import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SeleccionEntradasFragment extends Fragment {
     FragmentSeleccionEntradasBinding binding;
     NavController navController;
     public String nentradas;
+    public String hentradas;
+
+    DatabaseReference reference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,27 +46,54 @@ public class SeleccionEntradasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
+        reference = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
         // Menu desplegable
         Spinner spinnerNEntradas =view.findViewById(R.id.spinner_cantidad_entradas);
-        ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(requireActivity(), R.array.cantidad_entradas, R.layout.entradas_spinner);
+        adapter.setDropDownViewResource(R.layout.drop_downentradas_spinner);
+
+        Spinner spinner_hora_entradas =view.findViewById(R.id.spinner_horas);
+        ArrayAdapter<CharSequence> adapter_horas =ArrayAdapter.createFromResource(requireActivity(), R.array.horas_entradas, R.layout.entradas_spinner);
+        adapter_horas.setDropDownViewResource(R.layout.drop_downentradas_spinner);
 
         spinnerNEntradas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Query query = reference.child("2LJaKLPp8AAxfTD2yyxO").orderByChild("Entradas");
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // dataSnapshot is the "issue" node with all children with id 0
+                            for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                // do something with the individual "issues"
+                                System.out.println(issue.getKey());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 nentradas = (String) spinnerNEntradas.getSelectedItem();
                 System.out.println(nentradas);
 
+                hentradas = (String) spinner_hora_entradas.getSelectedItem();
+
                 Bundle result = new Bundle();
                 result.putString("nentradas", nentradas.toString().trim());
+                result.putString("horaentradas", hentradas.toString().trim());
                 getParentFragmentManager().setFragmentResult("key",result);
             }
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         // Modificar texto spinner: https://www.geeksforgeeks.org/how-to-change-spinner-text-style-in-android/
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerNEntradas.setAdapter(adapter);
+        spinner_hora_entradas.setAdapter(adapter_horas);
 
         binding.irabutacas.setOnClickListener(new View.OnClickListener() {
             @Override

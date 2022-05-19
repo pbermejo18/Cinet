@@ -10,4 +10,12 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+
+    <string-array name="horas_entradas">
+        <item>14:00 - 15:50</item>
+        <item>16:00 - 17:50</item>
+        <item>18:05 - 19:55</item>
+        <item>20:10 - 22:00</item>
+        <item>22:05 - 23:55</item>
+    </string-array>
 </resources>
