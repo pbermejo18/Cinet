@@ -83,12 +83,9 @@ public class SeleccionEntradasFragment extends Fragment {
         spinnerNEntradas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 nentradas = (String) spinnerNEntradas.getSelectedItem();
-                // database query
-
                 System.out.println(nentradas);
 
                 hentradas = (String) spinner_hora_entradas.getSelectedItem();
-
 
                 result.putString("nentradas", nentradas.toString().trim());
                 result.putString("horaentradas", hentradas.toString().trim());
@@ -112,24 +109,13 @@ public class SeleccionEntradasFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                // do something with the individual "issues"
-                                Map<String,Object> hm = new HashMap<>();
-                                hm.put(dataSnapshot.getValue().toString(),dataSnapshot.getValue());
-                                System.out.println(hm);
-
                                 // entradas disponibles
                                 String s = issue.getValue().toString();
-                                /*Toast toast2 = Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
-                                toast2.show();*/
-
-                                Integer a = 7;
-                                //Integer b = Integer.valueOf(Integer.parseInt(dataSnapshot.getValue().toString()));
-
 
                                 if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
                                     int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
 
-                                    String key = reference.getKey();
+                                    // String key = reference.getKey();
                                     Map<String, Object> childUpdates = new HashMap<>();
                                     childUpdates.put("/entrada/", rest);
 
@@ -137,14 +123,17 @@ public class SeleccionEntradasFragment extends Fragment {
 
                                     Toast toast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
                                     toast.show();
+                                    navController.navigate(R.id.seleccionButacasFragment);
                                 } else {
-                                    /*
-                                    Toast toast = Toast.makeText(getActivity(), "Not equals: " + issue, Toast.LENGTH_LONG);
-                                    toast.show();
-
-                                     */
+                                    if (Integer.parseInt(s) == 0) {
+                                        Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                    if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
+                                        Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
                                 }
-                                navController.navigate(R.id.seleccionButacasFragment);
                             }
                         }
                     }
@@ -154,7 +143,6 @@ public class SeleccionEntradasFragment extends Fragment {
                         System.out.println("NO");
                     }
                 });
-
 
             }
         });
