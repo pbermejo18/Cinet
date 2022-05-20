@@ -74,4 +74,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+    implementation 'com.craftman.cardform:cardform:0.0.2'
 }

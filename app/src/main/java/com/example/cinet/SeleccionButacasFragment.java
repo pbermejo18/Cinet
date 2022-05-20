@@ -25,10 +25,12 @@ import android.widget.Toast;
 
 import com.example.cinet.databinding.FragmentSeleccionButacasBinding;
 import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class SeleccionButacasFragment extends Fragment {
     NavController navController;
     TextView textViewNEntradas, preciototal, hora_entrada_txv, calendar_value;
+    ExtendedFloatingActionButton extendedFloatingActionButton;
     String nentradas, horaentrada, calendarval;
     int intentradas;
     FragmentSeleccionButacasBinding binding;
@@ -71,6 +73,7 @@ public class SeleccionButacasFragment extends Fragment {
         preciototal = view.findViewById(R.id.preciototal);
         hora_entrada_txv = view.findViewById(R.id.hora_entrada_txv);
         calendar_value = view.findViewById(R.id.calendar_value);
+        extendedFloatingActionButton = view.findViewById(R.id.pagar_button);
 
         binding.butacaA1.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
         binding.butacaA2.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
@@ -119,6 +122,12 @@ public class SeleccionButacasFragment extends Fragment {
             }
         });
         */
+        binding.pagarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.pagarFragment);
+            }
+        });
     }
 
     public void comprobarEntrada(View v) {

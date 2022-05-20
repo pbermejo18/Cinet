@@ -60,4 +60,8 @@
         android:name="com.example.cinet.SignOutFragment"
         android:label="fragment_sign_out"
         tools:layout="@layout/fragment_sign_out" />
+    <fragment
+        android:id="@+id/pagarFragment"
+        android:name="com.example.cinet.PagarFragment"
+        tools:layout="@layout/fragment_pagar" />
 </navigation>
