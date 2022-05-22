@@ -111,7 +111,7 @@ public class SeleccionEntradasFragment extends Fragment {
         binding.irabutacas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Query query = reference.orderByChild("entrada");
+                Query query = reference.orderByChild(hentradas);//.orderByChild("entrada");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,7 +125,7 @@ public class SeleccionEntradasFragment extends Fragment {
 
                                     // String key = reference.getKey();
                                     Map<String, Object> childUpdates = new HashMap<>();
-                                    childUpdates.put("/entrada/", rest);
+                                    childUpdates.put(hentradas, rest);
 
                                     reference.updateChildren(childUpdates);
 
