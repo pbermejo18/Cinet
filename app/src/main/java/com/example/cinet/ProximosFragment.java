@@ -84,7 +84,7 @@ public class ProximosFragment extends Fragment {
            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    peliculasViewModel.seleccionar(post); //
+                    peliculasViewModel.seleccionar(post, getSnapshots().getSnapshot(holder.getAdapterPosition()).getId().toString()); //
                     navController = Navigation.findNavController(v);
                     navController.navigate(R.id.mostrarPeliculaFragment);
                 }

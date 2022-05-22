@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -18,6 +21,7 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
 import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SeleccionEntradasFragment extends Fragment {
     FragmentSeleccionEntradasBinding binding;
@@ -39,9 +44,11 @@ public class SeleccionEntradasFragment extends Fragment {
     String curDate;
     public String nentradas;
     public String hentradas;
+    PeliculasViewModel elementosViewModel;
 
     DatabaseReference reference;
     FirebaseDatabase database;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,9 +64,10 @@ public class SeleccionEntradasFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
         // reference = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+        elementosViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
 
         database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
-        reference = database.getReference("entradas").child("2LJaKLPp8AAxfTD2yyxO");
+        reference = database.getReference("entradas").child(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));//.child("2LJaKLPp8AAxfTD2yyxO");
 
         calendarView=view.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
