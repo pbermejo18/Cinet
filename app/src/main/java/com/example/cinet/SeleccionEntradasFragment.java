@@ -93,17 +93,27 @@ public class SeleccionEntradasFragment extends Fragment {
                 nentradas = (String) spinnerNEntradas.getSelectedItem();
                 System.out.println(nentradas);
 
-                hentradas = (String) spinner_hora_entradas.getSelectedItem();
 
                 result.putString("nentradas", nentradas.toString().trim());
-                result.putString("horaentradas", hentradas.toString().trim());
-                //result.putString("calendar", curDate.toString().trim());
-                getParentFragmentManager().setFragmentResult("key",result);
             }
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
+        spinner_hora_entradas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                hentradas = (String) spinner_hora_entradas.getSelectedItem();
+                System.out.println(hentradas);
+
+                result.putString("horaentradas", hentradas.toString().trim());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
         // Modificar texto spinner: https://www.geeksforgeeks.org/how-to-change-spinner-text-style-in-android/
+        getParentFragmentManager().setFragmentResult("key",result);
         spinnerNEntradas.setAdapter(adapter);
         spinner_hora_entradas.setAdapter(adapter_horas);
 
@@ -111,47 +121,51 @@ public class SeleccionEntradasFragment extends Fragment {
         binding.irabutacas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Query query = reference.orderByChild(hentradas);//.orderByChild("entrada");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                // entradas disponibles
-                                if (Objects.equals(issue.getKey(), hentradas)) {
-                                    String s = issue.getValue().toString();
-                                    System.out.println(s);
-                                    if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
-                                        int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
+                if (curDate == null) {
+                    Toast toast = Toast.makeText(getActivity(), "Selecciona un día!", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    Query query = reference.orderByChild(hentradas);//.orderByChild("entrada");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                    // entradas disponibles
+                                    if (Objects.equals(issue.getKey(), hentradas)) {
+                                        String s = issue.getValue().toString();
+                                        System.out.println(s);
+                                        if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
+                                            int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
 
-                                        // String key = reference.getKey();
-                                        Map<String, Object> childUpdates = new HashMap<>();
-                                        childUpdates.put(hentradas, rest);
+                                            // String key = reference.getKey();
+                                            Map<String, Object> childUpdates = new HashMap<>();
+                                            childUpdates.put(hentradas, rest);
 
-                                        reference.updateChildren(childUpdates);
+                                            reference.updateChildren(childUpdates);
 
-                                        navController.navigate(R.id.seleccionButacasFragment);
-                                    } else {
-                                        if (Integer.parseInt(s) == 0) {
-                                            Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
-                                            toast.show();
-                                        }
-                                        if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
-                                            Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
-                                            toast.show();
+                                            navController.navigate(R.id.seleccionButacasFragment);
+                                        } else {
+                                            if (Integer.parseInt(s) == 0) {
+                                                Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
+                                                toast.show();
+                                            }
+                                            if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
+                                                Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
+                                                toast.show();
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.println("NO");
-                    }
-                });
-
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("NO");
+                        }
+                    });
+                }
             }
         });
     }

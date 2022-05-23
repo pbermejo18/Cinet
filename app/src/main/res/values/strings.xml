@@ -3,6 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="cantidad_entradas">
+        <item>-</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -12,6 +13,7 @@
     </string-array>
 
     <string-array name="horas_entradas">
+        <item>-</item>
         <item>14:00 - 15:50</item>
         <item>16:00 - 17:50</item>
         <item>18:05 - 19:55</item>
