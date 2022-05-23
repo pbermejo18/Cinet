@@ -118,28 +118,28 @@ public class SeleccionEntradasFragment extends Fragment {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot issue : dataSnapshot.getChildren()) {
                                 // entradas disponibles
-                                String s = issue.getValue().toString();
+                                if (Objects.equals(issue.getKey(), hentradas)) {
+                                    String s = issue.getValue().toString();
+                                    System.out.println(s);
+                                    if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
+                                        int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
 
-                                if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
-                                    int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
+                                        // String key = reference.getKey();
+                                        Map<String, Object> childUpdates = new HashMap<>();
+                                        childUpdates.put(hentradas, rest);
 
-                                    // String key = reference.getKey();
-                                    Map<String, Object> childUpdates = new HashMap<>();
-                                    childUpdates.put(hentradas, rest);
+                                        reference.updateChildren(childUpdates);
 
-                                    reference.updateChildren(childUpdates);
-
-                                    Toast toast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
-                                    toast.show();
-                                    navController.navigate(R.id.seleccionButacasFragment);
-                                } else {
-                                    if (Integer.parseInt(s) == 0) {
-                                        Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
-                                        toast.show();
-                                    }
-                                    if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
-                                        Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
-                                        toast.show();
+                                        navController.navigate(R.id.seleccionButacasFragment);
+                                    } else {
+                                        if (Integer.parseInt(s) == 0) {
+                                            Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
+                                        if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
+                                            Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
                                     }
                                 }
                             }
