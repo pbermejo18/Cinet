@@ -1,6 +1,8 @@
 package com.example.cinet;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,12 @@ import android.widget.Toast;
 import com.example.cinet.databinding.FragmentSeleccionButacasBinding;
 import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+
+import java.math.BigDecimal;
 
 public class SeleccionButacasFragment extends Fragment {
     NavController navController;
@@ -34,6 +42,24 @@ public class SeleccionButacasFragment extends Fragment {
     String nentradas, horaentrada, calendarval;
     int intentradas;
     FragmentSeleccionButacasBinding binding;
+
+    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
+
+    private static final String CONFIG_CLIENT_ID = "AZS0Lo6_wtFnpeYf1K6NpF1Pe6W4gIOqpiy3UyPraIWRh8N4zRE1CNgqGfKISuFuEBqQfOgC6io9JCt_";
+    private static final int REQUEST_CODE_PAYMENT = 1;
+
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(CONFIG_ENVIRONMENT)
+            .clientId(CONFIG_CLIENT_ID)
+
+            // configuracion minima del ente
+            .merchantName("Cinet")
+            .merchantPrivacyPolicyUri(
+                    Uri.parse("https://www.sandbox.paypal.com/cgi-bin/webscr"))
+            .merchantUserAgreementUri(
+                    Uri.parse("https://www.sandbox.paypal.com/cgi-bin/webscr"));
+
+    PayPalPayment thingToBuy;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,13 +147,23 @@ public class SeleccionButacasFragment extends Fragment {
                 navController.navigate(R.id.seleccionButacasFragment);
             }
         });
-        */
+*/
+
         binding.pagarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.pagarFragment);
+                thingToBuy = new PayPalPayment(new BigDecimal("50"), "USD",
+                        "pelicula", PayPalPayment.PAYMENT_INTENT_SALE);
+
+                Intent intent = new Intent(requireContext(), PaymentActivity.class);
+                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
+
+
+
     }
 
     public void comprobarEntrada(View v) {

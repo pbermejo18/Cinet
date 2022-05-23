@@ -3,43 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
-    android:background="@drawable/bg_color"
+    android:orientation="vertical"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_color"
     android:gravity="center_horizontal"
     android:padding="16dp">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="160dp"
-        android:layout_height="160dp" />
+        android:layout_height="160dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
         android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:gravity="center_horizontal"
         android:textColor="#d3c3db"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:textSize="28sp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valoracion" />
 
     <RatingBar
         android:id="@+id/valoracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="239dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="8dp"
         android:numStars="5"
-        android:progressTint="#FFEE00" />
+        android:progressTint="#FFEE00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
     <TextView
         android:id="@+id/descripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:gravity="center_horizontal"
         android:textColor="#d3c3db"
-        android:textSize="14sp"/>
-
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombre" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/irAPantallaComprarEntrada"
@@ -47,18 +67,43 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         app:backgroundTint="@color/purple_500"
-        app:tint="#EEE"
-        app:srcCompat="@drawable/compra" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/compra"
+        app:tint="#EEE" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/irAPantallaComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="12dp"
+        android:clickable="true"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/irAPantallaComprarEntrada"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/food_popcorn_icon_158557" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_float_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
         android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_menu_delete"/>
-</LinearLayout>
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/irAPantallaComida"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
