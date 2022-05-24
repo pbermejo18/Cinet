@@ -39,6 +39,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SignInFragment extends Fragment {
 
@@ -144,6 +154,7 @@ public class SignInFragment extends Fragment {
 
     private void actualizarUI(FirebaseUser currentUser) {
         if (currentUser != null && currentUser.isEmailVerified()) {
+            comprobarUsuario(currentUser);
             navController.navigate(R.id.homeFragment);
         } else {
             Toast toast = Toast.makeText(getActivity(), "Comprueba tu correo electrónico para poder acceder", Toast.LENGTH_LONG);
@@ -178,5 +189,34 @@ public class SignInFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void  comprobarUsuario(FirebaseUser currentUser) {
+        DatabaseReference reference;
+        FirebaseDatabase database;
+
+        database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
+        reference = database.getReference("usuarios");
+
+        Query query = reference;//.orderByChild("entrada");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        // entradas disponibles
+                        if (!Objects.equals(issue.getKey(), currentUser.getUid())) {
+                            reference.child(currentUser.getUid()).child("nombre").setValue(currentUser.getDisplayName());
+                            reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
+                            reference.child(currentUser.getUid()).child("movil").setValue(currentUser.getPhoneNumber());
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
+        });
     }
 }
