@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -25,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentSeleccionButacasBinding;
 import com.example.cinet.databinding.FragmentSeleccionEntradasBinding;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -39,9 +42,10 @@ public class SeleccionButacasFragment extends Fragment {
     NavController navController;
     TextView textViewNEntradas, preciototal, hora_entrada_txv, calendar_value;
     ExtendedFloatingActionButton extendedFloatingActionButton;
-    String nentradas, horaentrada, calendarval;
+    String nentradas, horaentrada, calendarval, titulo_peli;
     int intentradas;
     FragmentSeleccionButacasBinding binding;
+    PeliculasViewModel elementosViewModel;
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
@@ -53,13 +57,10 @@ public class SeleccionButacasFragment extends Fragment {
             .clientId(CONFIG_CLIENT_ID)
 
             // configuracion minima del ente
-            .merchantName("Cinet")
-            .merchantPrivacyPolicyUri(
-                    Uri.parse("https://www.sandbox.paypal.com/cgi-bin/webscr"))
-            .merchantUserAgreementUri(
-                    Uri.parse("https://www.sandbox.paypal.com/cgi-bin/webscr"));
+            .merchantName("Cinet");
 
     PayPalPayment thingToBuy;
+    float ne;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class SeleccionButacasFragment extends Fragment {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 nentradas = bundle.getString("nentradas");
                 textViewNEntradas.setText("Total de entradas: " + nentradas);
-                float ne = Float.parseFloat(nentradas);
+                ne = Float.parseFloat(nentradas);
                 preciototal.setText("Precio final: " + ne * 11.85f + " €");
                 intentradas = Integer.parseInt(nentradas);
 
@@ -100,6 +101,14 @@ public class SeleccionButacasFragment extends Fragment {
         hora_entrada_txv = view.findViewById(R.id.hora_entrada_txv);
         calendar_value = view.findViewById(R.id.calendar_value);
         extendedFloatingActionButton = view.findViewById(R.id.pagar_button);
+
+        elementosViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
+        elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Post>() {
+            @Override
+            public void onChanged(Post pelicula) {
+                titulo_peli = pelicula.titulo;
+            }
+        });
 
         binding.butacaA1.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
         binding.butacaA2.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
@@ -152,8 +161,7 @@ public class SeleccionButacasFragment extends Fragment {
         binding.pagarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thingToBuy = new PayPalPayment(new BigDecimal("50"), "USD",
-                        "pelicula", PayPalPayment.PAYMENT_INTENT_SALE);
+                thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(ne * 11.85f)), "EUR", titulo_peli, PayPalPayment.PAYMENT_INTENT_SALE);
 
                 Intent intent = new Intent(requireContext(), PaymentActivity.class);
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
@@ -161,9 +169,6 @@ public class SeleccionButacasFragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
-
-
-
     }
 
     public void comprobarEntrada(View v) {
