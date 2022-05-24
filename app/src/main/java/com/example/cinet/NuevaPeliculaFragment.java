@@ -24,11 +24,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,6 +52,8 @@ public class NuevaPeliculaFragment extends Fragment {
     public Uri mediaUri;
     public String mediaTipo;
 
+    DatabaseReference mDatabase;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_nueva_pelicula, container, false);
@@ -68,6 +73,8 @@ public class NuevaPeliculaFragment extends Fragment {
 
         titulo = tituloEditText.getText().toString();
         descripcion = descripcionEditText.getText().toString();
+
+        mDatabase = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
 
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,12 +139,13 @@ public class NuevaPeliculaFragment extends Fragment {
             descripcionEditText.setError("Required");
             return;
         }
-        publishButton.setEnabled(false);
+
         if (mediaTipo == null) {
-            guardarEnFirestore(postTitulo, postDescription, null);
+            Toast toast = Toast.makeText(getActivity(), "Escoge una imagen de portada", Toast.LENGTH_LONG);
+            toast.show();
         }
-        else
-        {
+        else {
+            publishButton.setEnabled(false);
             pujaIguardarEnFirestore(postTitulo, postDescription);
         }
     }
@@ -151,6 +159,12 @@ public class NuevaPeliculaFragment extends Fragment {
                     public void onSuccess(DocumentReference documentReference) {
                         navController.popBackStack();
                         appViewModel.setMediaSeleccionado( null, null);
+
+                        mDatabase.child("entradas").child(documentReference.getId()).child("14:00 - 15:50").setValue(38);
+                        mDatabase.child("entradas").child(documentReference.getId()).child("16:00 - 17:50").setValue(38);
+                        mDatabase.child("entradas").child(documentReference.getId()).child("18:05 - 19:55").setValue(38);
+                        mDatabase.child("entradas").child(documentReference.getId()).child("20:10 - 22:00").setValue(38);
+                        mDatabase.child("entradas").child(documentReference.getId()).child("22:05 - 23:55").setValue(38);
                     }
                 });
     }
@@ -162,5 +176,12 @@ public class NuevaPeliculaFragment extends Fragment {
                 .continueWithTask(task ->
                         task.getResult().getStorage().getDownloadUrl())
                 .addOnSuccessListener(url -> guardarEnFirestore(titulo, descripcion, url.toString()));
+/*
+        mDatabase.child("entradas").child().child("14:00 - 15:50").setValue(38);
+        mDatabase.child("entradas").child("pol").child("16:00 - 17:50").setValue(38);
+        mDatabase.child("entradas").child("pol").child("18:05 - 19:55").setValue(38);
+        mDatabase.child("entradas").child("pol").child("20:10 - 22:00").setValue(38);
+        mDatabase.child("entradas").child("pol").child("22:05 - 23:55").setValue(38);
+ */
     }
 }
