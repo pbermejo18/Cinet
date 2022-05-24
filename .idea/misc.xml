@@ -7,7 +7,9 @@
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.215" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable/bg_color.xml" value="0.2595" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable/bg_color_2.xml" value="0.2595" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable/camera.xml" value="0.124" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable/entradas_spinner.xml" value="0.215" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/drawable/image.xml" value="0.124" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_main.xml" value="0.23832528180354268" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/activity_pagar.xml" value="0.11302083333333333" />
@@ -19,6 +21,7 @@
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_estrenos.xml" value="0.2" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_mostrar_pelicula.xml" value="0.2" />
+        <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_nueva_pelicula.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_pagar.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_perfil.xml" value="0.4" />
         <entry key="..\:/Users/Pol/AndroidStudioProjects/Cinet/app/src/main/res/layout/fragment_proximos.xml" value="0.264" />

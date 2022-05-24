@@ -61,7 +61,8 @@
         android:label="fragment_sign_out"
         tools:layout="@layout/fragment_sign_out" />
     <fragment
-        android:id="@+id/pagarFragment"
-        android:name="com.example.cinet.PagarFragment"
-        tools:layout="@layout/fragment_pagar" />
+        android:id="@+id/nuevaPeliculaFragment"
+        android:name="com.example.cinet.NuevaPeliculaFragment"
+        android:label="Añadir película"
+        tools:layout="@layout/fragment_nueva_pelicula" />
 </navigation>

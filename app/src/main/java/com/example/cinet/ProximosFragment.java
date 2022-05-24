@@ -48,9 +48,15 @@ public class ProximosFragment extends Fragment {
         // navController = Navigation.findNavController(view);  // <-----------------
         peliculasViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
 
-
         if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
             binding.addFloatButton.setVisibility(View.VISIBLE);
+            binding.addFloatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.nuevaPeliculaFragment);
+                }
+            });
         }
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.peliculasRecyclerView);
