@@ -17,7 +17,7 @@
             android:id="@+id/tituloEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="¿Qué titulo contigo?"
+            android:hint="¿Titulo de la película?"
             android:textSize="24sp"
             android:lines="6"
             android:gravity="top|left">
@@ -27,7 +27,7 @@
             android:id="@+id/postContentEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="¿Qué pasa contigo?"
+            android:hint="¿Descripción de la película?"
             android:textSize="24sp"
             android:lines="6"
             android:gravity="top|left">

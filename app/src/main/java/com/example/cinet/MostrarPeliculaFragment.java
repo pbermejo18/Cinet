@@ -18,6 +18,9 @@ import android.widget.RatingBar;
 import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class MostrarPeliculaFragment extends Fragment {
     FragmentMostrarPeliculaBinding binding;
@@ -39,6 +42,12 @@ public class MostrarPeliculaFragment extends Fragment {
 
         if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
             binding.deleteFloatButton.setVisibility(View.VISIBLE);
+            binding.deleteFloatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseFirestore.getInstance().collection("peliculas").document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue())).delete();
+                }
+            });
         }
 
         elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Post>() {
@@ -57,6 +66,5 @@ public class MostrarPeliculaFragment extends Fragment {
                 navController.navigate(R.id.seleccionEntradasFragment);
             }
         });
-
     }
 }
