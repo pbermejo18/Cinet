@@ -11,7 +11,12 @@
         android:title="Perfil" />
 
     <item
+        android:id="@+id/sobreNosotrosFragment"
+        android:icon="@drawable/info"
+        android:title="Sobre nosotros" />
+
+    <item
         android:id="@+id/signOutFragment"
-        android:icon="@android:drawable/ic_lock_idle_charging"
+        android:icon="@drawable/logout"
         android:title="Cerrar sesión" />
 </menu>

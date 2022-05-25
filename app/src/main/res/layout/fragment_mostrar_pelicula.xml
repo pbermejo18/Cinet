@@ -17,13 +17,12 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/nombre"
@@ -56,7 +55,7 @@
         android:layout_marginTop="6dp"
         android:gravity="center_horizontal"
         android:textColor="#d3c3db"
-        android:textSize="14sp"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombre" />
@@ -74,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripcion"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/compra"
+        app:srcCompat="@drawable/entradas"
         app:tint="#EEE" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -90,7 +89,7 @@
         app:layout_constraintEnd_toStartOf="@+id/irAPantallaComprarEntrada"
         app:layout_constraintTop_toBottomOf="@+id/descripcion"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/food_popcorn_icon_158557" />
+        app:srcCompat="@drawable/popcorn" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_float_button"
