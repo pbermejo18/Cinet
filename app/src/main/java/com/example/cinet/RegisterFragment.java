@@ -166,7 +166,7 @@ public class RegisterFragment extends Fragment {
                             reference.child(currentUser.getUid()).child("nombre").setValue(nombreEditText.getText().toString() + " " + apellidosEditText.getText().toString());
                             reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
                             reference.child(currentUser.getUid()).child("movil").setValue(phoneEditText.getText().toString());
-                            reference.child(currentUser.getUid()).child("fecha de nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
+                            reference.child(currentUser.getUid()).child("fecha_de_nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
                         }
 
                     }

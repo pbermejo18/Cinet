@@ -210,7 +210,7 @@ public class SignInFragment extends Fragment {
                             reference.child(currentUser.getUid()).child("nombre").setValue(currentUser.getDisplayName());
                             reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
                             reference.child(currentUser.getUid()).child("movil").setValue("-");
-                            reference.child(currentUser.getUid()).child("fecha de nacimiento").setValue("-");
+                            reference.child(currentUser.getUid()).child("fecha_de_nacimiento").setValue("-");
                         }
 
                     }
