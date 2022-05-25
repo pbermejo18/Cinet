@@ -11,6 +11,11 @@
         android:title="Perfil" />
 
     <item
+        android:id="@+id/comprasFragment"
+        android:icon="@drawable/perfil"
+        android:title="Compras" />
+
+    <item
         android:id="@+id/cinesFragment"
         android:icon="@drawable/claqueta"
         android:title="Cines" />

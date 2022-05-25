@@ -68,11 +68,16 @@
     <fragment
         android:id="@+id/sobreNosotrosFragment2"
         android:name="com.example.cinet.SobreNosotrosFragment"
-        android:label="fragment_sobre_nosotros"
+        android:label="Sobre nosotros"
         tools:layout="@layout/fragment_sobre_nosotros" />
     <fragment
         android:id="@+id/cinesFragment"
         android:name="com.example.cinet.CinesFragment"
         android:label="Cines"
         tools:layout="@layout/fragment_cines" />
+    <fragment
+        android:id="@+id/comprasFragment"
+        android:name="com.example.cinet.ComprasFragment"
+        android:label="Compras"
+        tools:layout="@layout/fragment_compras" />
 </navigation>
