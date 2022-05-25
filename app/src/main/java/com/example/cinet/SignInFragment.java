@@ -154,7 +154,7 @@ public class SignInFragment extends Fragment {
 
     private void actualizarUI(FirebaseUser currentUser) {
         if (currentUser != null && currentUser.isEmailVerified()) {
-            comprobarUsuario(currentUser);
+            // comprobarUsuario(currentUser);
             navController.navigate(R.id.homeFragment);
         } else {
             Toast toast = Toast.makeText(getActivity(), "Comprueba tu correo electrónico para poder acceder", Toast.LENGTH_LONG);
@@ -182,6 +182,7 @@ public class SignInFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.e("ABCD", "signInWithCredential:success");
                             actualizarUI(mAuth.getCurrentUser());
+                            comprobarUsuario(mAuth.getCurrentUser());
                         } else {
                             Log.e("ABCD", "signInWithCredential:failure",
                                     task.getException());
@@ -198,17 +199,18 @@ public class SignInFragment extends Fragment {
         database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = database.getReference("usuarios");
 
-        Query query = reference;//.orderByChild("entrada");
+        Query query = reference.orderByChild(currentUser.getUid());//.orderByChild("entrada");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
                         // entradas disponibles
-                        if (!Objects.equals(issue.getKey(), currentUser.getUid())) {
+                        if (!issue.getKey().equals(currentUser.getUid())) {
                             reference.child(currentUser.getUid()).child("nombre").setValue(currentUser.getDisplayName());
                             reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
-                            reference.child(currentUser.getUid()).child("movil").setValue(currentUser.getPhoneNumber());
+                            reference.child(currentUser.getUid()).child("movil").setValue("-");
+                            reference.child(currentUser.getUid()).child("fecha de nacimiento").setValue("-");
                         }
 
                     }

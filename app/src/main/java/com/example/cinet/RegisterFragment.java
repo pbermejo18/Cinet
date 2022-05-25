@@ -19,22 +19,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cinet.databinding.ActivityMainBinding;
+import com.example.cinet.databinding.FragmentRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
 public class RegisterFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    protected EditText emailEditText, passwordEditText, nombreEditText;
+    protected EditText emailEditText, passwordEditText, nombreEditText , apellidosEditText, phoneEditText, fecha_nacimientoEditText;
     private Button registerButton;
     private FirebaseAuth mAuth;
+
+    ActivityMainBinding binding;
 
     public RegisterFragment() {}
 
@@ -53,6 +63,9 @@ public class RegisterFragment extends Fragment {
         emailEditText = view.findViewById(R.id.emailEditText);
         passwordEditText = view.findViewById(R.id.passwordEditText);
         nombreEditText = view.findViewById(R.id.nombreEditText);
+        apellidosEditText = view.findViewById(R.id.apellidosEditText);
+        phoneEditText = view.findViewById(R.id.phoneEditText);
+        fecha_nacimientoEditText = view.findViewById(R.id.fecha_nacimientoEditText);
 
         registerButton = view.findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +104,16 @@ public class RegisterFragment extends Fragment {
         currentUser.sendEmailVerification();
         // Dar nombre al user
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(nombreEditText.getText().toString())
+                .setDisplayName(nombreEditText.getText().toString()+ " " + apellidosEditText.getText().toString())
                 .build();
         currentUser.updateProfile(profileUpdates);
+
+        crearUsuarioEnBDD(currentUser);
+        /*binding = binding.inflate(getLayoutInflater());
+        NavigationView navigationView = binding.navView;
+        View header = navigationView.getHeaderView(0);
+        final TextView name = header.findViewById(R.id.displayNameTextView);
+        name.setText(nombreEditText.getText());*/
 
         navController.navigate(R.id.signInFragment);
         // mensaje de recuerdo para verificar
@@ -126,5 +146,35 @@ public class RegisterFragment extends Fragment {
         }
 
         return valid;
+    }
+
+    private void  crearUsuarioEnBDD(FirebaseUser currentUser) {
+        DatabaseReference reference;
+        FirebaseDatabase database;
+
+        database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
+        reference = database.getReference("usuarios");
+
+        Query query = reference;//.orderByChild("entrada");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        // entradas disponibles
+                        if (!Objects.equals(issue.getKey(), currentUser.getUid())) {
+                            reference.child(currentUser.getUid()).child("nombre").setValue(nombreEditText.getText().toString() + " " + apellidosEditText.getText().toString());
+                            reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
+                            reference.child(currentUser.getUid()).child("movil").setValue(phoneEditText.getText().toString());
+                            reference.child(currentUser.getUid()).child("fecha de nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
+        });
     }
 }
