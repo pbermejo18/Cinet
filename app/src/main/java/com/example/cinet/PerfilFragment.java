@@ -155,6 +155,11 @@ public class PerfilFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             reference.child("nombre").setValue(nombreEditText.getText().toString());
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(nombreEditText.getText().toString())
+                                    .build();
+                            user.updateProfile(profileUpdates);
+
                             reference.child("email").setValue(emailEditText.getText().toString());
                             reference.child("movil").setValue(movilEditText.getText().toString());
                             reference.child("fecha_de_nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
