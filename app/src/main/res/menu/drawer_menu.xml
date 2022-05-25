@@ -11,6 +11,11 @@
         android:title="Perfil" />
 
     <item
+        android:id="@+id/cinesFragment"
+        android:icon="@drawable/claqueta"
+        android:title="Cines" />
+
+    <item
         android:id="@+id/sobreNosotrosFragment2"
         android:icon="@drawable/info"
         android:title="Sobre nosotros" />
