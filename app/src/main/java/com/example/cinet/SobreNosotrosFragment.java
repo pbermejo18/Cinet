@@ -31,9 +31,19 @@ public class SobreNosotrosFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            googleMap.setMinZoomPreference(10.00f);
+
+            LatLng cinet_Maquinista = new LatLng(41.439605802741276, 2.1983377230049324);
+            LatLng cinet_Magic = new LatLng(41.44344182223131, 2.229998153709825);
+            LatLng cinet_Diagonal = new LatLng(41.41039893822629, 2.216464073430923);
+            LatLng cinet_glories = new LatLng(41.40811016274522, 2.192440875301859);
+
+            googleMap.addMarker(new MarkerOptions().position(cinet_Maquinista).title("Cinet la Maquinista"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_Magic).title("Cinet Màgic Badalona"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_Diagonal).title("Cinet Diagonal Mar"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_glories).title("Cinet Glòries"));
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(cinet_Maquinista));
         }
     };
 
