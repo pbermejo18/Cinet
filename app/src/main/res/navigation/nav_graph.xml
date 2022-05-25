@@ -66,8 +66,8 @@
         android:label="Añadir película"
         tools:layout="@layout/fragment_nueva_pelicula" />
     <fragment
-        android:id="@+id/sobreNosotrosFragment"
+        android:id="@+id/sobreNosotrosFragment2"
         android:name="com.example.cinet.SobreNosotrosFragment"
-        android:label="Información"
+        android:label="fragment_sobre_nosotros"
         tools:layout="@layout/fragment_sobre_nosotros" />
 </navigation>
