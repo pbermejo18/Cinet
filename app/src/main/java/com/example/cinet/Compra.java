@@ -1,41 +1,59 @@
 package com.example.cinet;
 
 public class Compra {
-    boolean aperitivos;
-    String hora, uid;
-    Long entradas;
+    // boolean aperitivos;
+    String entradas, fecha, hora_entradas, precio, titulo, uid;
+    // Long entradas;
 
     public Compra() { }
 
-    public Compra(boolean aperitivos, Long entradas, String hora, String uid) {
-        this.aperitivos = aperitivos;
+    public Compra(String entradas, String fecha, String hora_entradas, String precio, String titulo, String uid) {
         this.entradas = entradas;
-        this.hora = hora;
+        this.fecha = fecha;
+        this.hora_entradas = hora_entradas;
+        this.precio = precio;
+        this.titulo = titulo;
         this.uid = uid;
     }
 
-    public boolean isAperitivos() {
-        return aperitivos;
-    }
-
-    public void setAperitivos(boolean aperitivos) {
-        this.aperitivos = aperitivos;
-    }
-
-    public Long getEntradas() {
+    public String getEntradas() {
         return entradas;
     }
 
-    public void setEntradas(Long entradas) {
+    public void setEntradas(String entradas) {
         this.entradas = entradas;
     }
 
-    public String getHora() {
-        return hora;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora_entradas() {
+        return hora_entradas;
+    }
+
+    public void setHora_entradas(String hora_entradas) {
+        this.hora_entradas = hora_entradas;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getUid() {
@@ -49,9 +67,11 @@ public class Compra {
     @Override
     public String toString() {
         return "Compra{" +
-                "aperitivos=" + aperitivos +
-                ", entradas=" + entradas +
-                ", hora='" + hora + '\'' +
+                "entradas='" + entradas + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", hora_entradas='" + hora_entradas + '\'' +
+                ", precio='" + precio + '\'' +
+                ", titulo='" + titulo + '\'' +
                 ", uid='" + uid + '\'' +
                 '}';
     }
