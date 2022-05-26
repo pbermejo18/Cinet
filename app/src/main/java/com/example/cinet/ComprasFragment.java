@@ -61,37 +61,26 @@ public class ComprasFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (binding = FragmentComprasBinding.inflate(inflater, container, false)).getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // recyclerView = view.findViewById(R.id.recyclerView);
         reference = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/").getReference("compras");
-        //recyclerView.setHasFixedSize(true);
-        // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         list = new ArrayList<>();
-        // comprasAdapter = new ComprasAdapter(getContext(), list);
-        // recyclerView.setAdapter(comprasAdapter);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        /*String text = snapshot.child("precio").getValue(String.class);
-                        System.out.println(text);
-                        System.out.println(snapshot);*/
                         Compra us = snapshot.getValue(Compra.class);
                         assert us != null;
-                        if (us != null) {
+                        System.out.println(us);
+                        System.out.println(user.getUid());
+                        if (snapshot.child("uid").getValue() != null && user.getUid() != null) {
                             if (us.getUid().equals(user.getUid())) {
                                 list.add(us);
                                 System.out.println(list.get(0));
                                 elementosAdapter.establecerLista(list);
+                            } else {
+                                System.out.println("N");
                             }
                         }
                     }
@@ -102,12 +91,15 @@ public class ComprasFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
         });
 
+        return (binding = FragmentComprasBinding.inflate(inflater, container, false)).getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.recyclerView.setAdapter(elementosAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-
     }
 
     class ElementoViewHolder extends RecyclerView.ViewHolder {
@@ -134,10 +126,10 @@ public class ComprasFragment extends Fragment {
 
             Compra elemento = elementos.get(position);
 
-            holder.binding.firstname.setText(elemento.getTitulo());
-            //holder.binding.valoracion.setRating(elemento.valoracion);
-
-
+            holder.binding.titulo.setText(elemento.getTitulo());
+            holder.binding.entradas.setText("Entradas: " + elemento.getEntradas());
+            holder.binding.hora.setText(elemento.getHora_entradas());
+            holder.binding.precio.setText(elemento.getPrecio());
         }
 
         @Override
