@@ -43,6 +43,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     DatabaseReference reference;
     FirebaseDatabase database;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
     private static final String CONFIG_CLIENT_ID = "AZS0Lo6_wtFnpeYf1K6NpF1Pe6W4gIOqpiy3UyPraIWRh8N4zRE1CNgqGfKISuFuEBqQfOgC6io9JCt_";
@@ -149,14 +153,8 @@ public class MainActivity extends AppCompatActivity {
                     // informacion transación paypal
                     JSONObject jsonObject_Response = confirm.toJSONObject();
                     System.out.println(confirm.toJSONObject().toString(4));
-                    /*
-                    {
-                         "amount": "11.85",
-                         "currency_code": "EUR",
-                         "short_description": "Top Gun: Maverick",
-                         "intent": "sale"
-                     }
-                     */
+
+                    // información de la compra (titulo,precio ...)
                     JSONObject jsonObject_Pedido = confirm.getPayment().toJSONObject();
                     System.out.println(confirm.getPayment().toJSONObject().toString(4));
 
@@ -169,8 +167,10 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 try {
-                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).setValue(confirm.getPayment().toString());
-                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(jsonObject_Pedido.getString("amount").toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("titulo").setValue(jsonObject_Pedido.getString("short_description").toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(jsonObject_Pedido.getString("amount").toString() + " " + jsonObject_Pedido.getString("currency_code").toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("fecha").setValue(jsonObject_Response.getJSONObject("response").getString("create_time"));
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(user.getUid().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
