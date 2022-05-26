@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -45,6 +47,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseDatabase database;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference reference_entradas;
+    FirebaseDatabase database_entradas;
+    PeliculasViewModel elementosViewModel;
+    boolean aceptado;
+    EntradasHoraViewModel entradasHoraViewModel;
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
@@ -137,7 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /*getSupportFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                nentradas = bundle.getString("nentradas");
+                hentradas = bundle.getString("horaentradas");
+            }
+        });*/
     }
 
     // Metodos para Paypal
@@ -183,6 +198,48 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Orden procesada",
                             Toast.LENGTH_LONG).show();
+
+
+                    elementosViewModel = new ViewModelProvider(this).get(PeliculasViewModel.class);
+                    entradasHoraViewModel = new ViewModelProvider(this).get(EntradasHoraViewModel.class);
+
+                    database_entradas = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
+                    reference_entradas = database.getReference("entradas").child(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));
+
+                    System.out.println(entradasHoraViewModel.hora_seleccionada().getValue());
+                    System.out.println(entradasHoraViewModel.entradas_seleccionadas().getValue());
+
+                    Query query_entradas = reference_entradas.orderByChild(entradasHoraViewModel.hora_seleccionada().getValue().toString());//.orderByChild("entrada");
+                    query_entradas.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                    // entradas disponibles
+                                    if (Objects.equals(issue.getKey(), entradasHoraViewModel.hora_seleccionada().getValue())) {
+                                        String s = issue.getValue().toString();
+                                        System.out.println(s);
+                                        if (Integer.parseInt(s) >= Integer.parseInt(Objects.requireNonNull(entradasHoraViewModel.entradas_seleccionadas().getValue()))) {
+                                            int rest = Integer.parseInt(s) - Integer.parseInt(Objects.requireNonNull(entradasHoraViewModel.entradas_seleccionadas().getValue()));
+                                            Map<String, Object> childUpdates = new HashMap<>();
+                                            childUpdates.put(entradasHoraViewModel.hora_seleccionada().getValue(), rest);
+
+                                            reference_entradas.updateChildren(childUpdates);
+                                            // navController.navigate(R.id.seleccionButacasFragment);
+                                        } else {
+                                            /*Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
+                                            toast.show();*/
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("NO");
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();

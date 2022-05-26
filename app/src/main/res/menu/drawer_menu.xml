@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/comprasFragment"
-        android:icon="@drawable/perfil"
+        android:icon="@drawable/carrito"
         android:title="Compras" />
 
     <item

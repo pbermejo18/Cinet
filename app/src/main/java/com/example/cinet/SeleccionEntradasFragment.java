@@ -45,6 +45,7 @@ public class SeleccionEntradasFragment extends Fragment {
     public String nentradas;
     public String hentradas;
     PeliculasViewModel elementosViewModel;
+    EntradasHoraViewModel entradasHoraViewModel;
 
     DatabaseReference reference;
     FirebaseDatabase database;
@@ -114,6 +115,7 @@ public class SeleccionEntradasFragment extends Fragment {
 
         // Modificar texto spinner: https://www.geeksforgeeks.org/how-to-change-spinner-text-style-in-android/
         getParentFragmentManager().setFragmentResult("key",result);
+
         spinnerNEntradas.setAdapter(adapter);
         spinner_hora_entradas.setAdapter(adapter_horas);
 
@@ -121,6 +123,8 @@ public class SeleccionEntradasFragment extends Fragment {
         binding.irabutacas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                entradasHoraViewModel = new ViewModelProvider(requireActivity()).get(EntradasHoraViewModel.class);
+                entradasHoraViewModel.seleccionar(hentradas,nentradas);
                 if (curDate == null) {
                     Toast toast = Toast.makeText(getActivity(), "Selecciona un día!", Toast.LENGTH_LONG);
                     toast.show();
@@ -135,7 +139,7 @@ public class SeleccionEntradasFragment extends Fragment {
                                     if (Objects.equals(issue.getKey(), hentradas)) {
                                         String s = issue.getValue().toString();
                                         System.out.println(s);
-                                        if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
+                                        /*if (Integer.parseInt(s) >= Integer.parseInt(nentradas)) {
                                             int rest = Integer.parseInt(s) - Integer.parseInt(nentradas);
 
                                             // String key = reference.getKey();
@@ -145,16 +149,17 @@ public class SeleccionEntradasFragment extends Fragment {
                                             reference.updateChildren(childUpdates);
 
                                             navController.navigate(R.id.seleccionButacasFragment);
-                                        } else {
+                                        } else { */
                                             if (Integer.parseInt(s) == 0) {
                                                 Toast toast = Toast.makeText(getActivity(), "Lo sentimos, no quedan entradas disponibles", Toast.LENGTH_LONG);
                                                 toast.show();
-                                            }
-                                            if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
+                                            } else if (Integer.parseInt(s) < Integer.parseInt(nentradas) && Integer.parseInt(s) != 0) {
                                                 Toast toast = Toast.makeText(getActivity(), "No quedan tantas entradas disponibles. Actualmente quedan: " + Integer.parseInt(s) + " entradas.", Toast.LENGTH_LONG);
                                                 toast.show();
+                                            } else {
+                                                navController.navigate(R.id.seleccionButacasFragment);
                                             }
-                                        }
+                                        // }
                                     }
                                 }
                             }
