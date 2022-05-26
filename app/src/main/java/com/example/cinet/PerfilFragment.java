@@ -36,7 +36,7 @@ import java.util.Objects;
 
 public class PerfilFragment extends Fragment {
 
-    ImageView photoImageView, lapiz_nombre, lapiz_email, lapiz_movil, lapiz_fecha_nacimiento;
+    ImageView photoImageView, lapiz_nombre, lapiz_movil, lapiz_fecha_nacimiento;
     EditText nombreEditText, emailEditText, movilEditText, fecha_nacimientoEditText;
     DatabaseReference reference;
     FirebaseDatabase database;
@@ -65,7 +65,6 @@ public class PerfilFragment extends Fragment {
         extendedFloatingActionButton = view.findViewById(R.id.guardar_información);
 
         lapiz_nombre = view.findViewById(R.id.lapiz_nombre);
-        lapiz_email = view.findViewById(R.id.lapiz_email);
         lapiz_movil = view.findViewById(R.id.lapiz_movil);
         lapiz_fecha_nacimiento = view.findViewById(R.id.lapiz_fecha_nacimiento);
 
@@ -89,10 +88,10 @@ public class PerfilFragment extends Fragment {
                 System.out.println(user_data);
 
                 assert user_data != null;
-                nombreEditText.setText(user_data.getNombre().toString());
-                emailEditText.setText(user_data.getEmail().toString());
-                movilEditText.setText(user_data.getMovil().toString());
-                fecha_nacimientoEditText.setText(user_data.getFecha_de_nacimiento().toString());
+                nombreEditText.setHint(user_data.getNombre().toString());
+                emailEditText.setHint(user_data.getEmail().toString());
+                movilEditText.setHint(user_data.getMovil().toString());
+                fecha_nacimientoEditText.setHint(user_data.getFecha_de_nacimiento().toString());
             }
 
             @Override
@@ -107,17 +106,6 @@ public class PerfilFragment extends Fragment {
                 nombreEditText.setFocusableInTouchMode(true);
                 nombreEditText.setLongClickable(true);
                 nombreEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-            }
-        });
-
-        lapiz_email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                emailEditText.setFocusable(true);
-                emailEditText.setClickable(true);
-                emailEditText.setFocusableInTouchMode(true);
-                emailEditText.setLongClickable(true);
-                emailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
             }
         });
 
@@ -154,15 +142,33 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            reference.child("nombre").setValue(nombreEditText.getText().toString());
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(nombreEditText.getText().toString())
-                                    .build();
-                            user.updateProfile(profileUpdates);
+                            if (nombreEditText.getText().toString() == null || nombreEditText.getText().toString().isEmpty()) {
+                                reference.child("nombre").setValue(nombreEditText.getHint().toString());
+                            } else {
+                                reference.child("nombre").setValue(nombreEditText.getText().toString());
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(nombreEditText.getText().toString())
+                                        .build();
+                                user.updateProfile(profileUpdates);
+                            }
 
-                            reference.child("email").setValue(emailEditText.getText().toString());
-                            reference.child("movil").setValue(movilEditText.getText().toString());
-                            reference.child("fecha_de_nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
+                            if (emailEditText.getText().toString() == null || emailEditText.getText().toString().isEmpty()) {
+                                reference.child("email").setValue(emailEditText.getHint().toString());
+                            } else {
+                                reference.child("email").setValue(emailEditText.getText().toString());
+                            }
+
+                            if (movilEditText.getText().toString() == null || movilEditText.getText().toString().isEmpty()) {
+                                reference.child("movil").setValue(movilEditText.getHint().toString());
+                            } else {
+                                reference.child("movil").setValue(movilEditText.getText().toString());
+                            }
+
+                            if (fecha_nacimientoEditText.getText().toString() == null || fecha_nacimientoEditText.getText().toString().isEmpty()) {
+                                reference.child("fecha_de_nacimiento").setValue(fecha_nacimientoEditText.getHint().toString());
+                            } else {
+                                reference.child("fecha_de_nacimiento").setValue(fecha_nacimientoEditText.getText().toString());
+                            }
                         }
                     }
 

@@ -64,30 +64,17 @@
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/lapiz_email"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/pen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/lapiz_nombre" />
-
     <ImageView
         android:id="@+id/lapiz_movil"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="153dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/pen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/lapiz_email" />
+        app:layout_constraintTop_toBottomOf="@+id/lapiz_nombre" />
 
     <ImageView
         android:id="@+id/lapiz_fecha_nacimiento"
