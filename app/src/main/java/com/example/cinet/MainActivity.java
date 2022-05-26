@@ -185,10 +185,14 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 try {
+
+                                    double d = Double.parseDouble(jsonObject_Pedido.getString("amount").toString());
+                                    String precio_final = String.format("%.2f", d);
+
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("titulo").setValue(jsonObject_Pedido.getString("short_description").toString());
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("entradas").setValue(entradasHoraViewModel.entradas_seleccionadas().getValue());
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("hora_entradas").setValue(entradasHoraViewModel.hora_seleccionada().getValue());
-                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(jsonObject_Pedido.getString("amount").toString() + " " + jsonObject_Pedido.getString("currency_code").toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(precio_final + " " + jsonObject_Pedido.getString("currency_code").toString());
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("fecha").setValue(jsonObject_Response.getJSONObject("response").getString("create_time"));
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(user.getUid().toString());
                                 } catch (JSONException e) {

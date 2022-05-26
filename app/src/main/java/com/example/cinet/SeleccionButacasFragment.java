@@ -37,6 +37,8 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class SeleccionButacasFragment extends Fragment {
     NavController navController;
@@ -46,6 +48,8 @@ public class SeleccionButacasFragment extends Fragment {
     int intentradas;
     FragmentSeleccionButacasBinding binding;
     PeliculasViewModel elementosViewModel;
+    double input, precio;
+    float ne;
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
@@ -60,7 +64,6 @@ public class SeleccionButacasFragment extends Fragment {
             .merchantName("Cinet");
 
     PayPalPayment thingToBuy;
-    float ne;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +73,12 @@ public class SeleccionButacasFragment extends Fragment {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 nentradas = bundle.getString("nentradas");
                 textViewNEntradas.setText("Total de entradas: " + nentradas);
-                ne = Float.parseFloat(nentradas);
-                preciototal.setText("Precio final: " + ne * 11.85f + " €");
+
+                ne = Float.parseFloat(nentradas) * 11.85f;
+                input = ne;
+                BigDecimal bd = new BigDecimal(input).setScale(2, RoundingMode.HALF_UP);
+                precio = bd.doubleValue();
+                preciototal.setText("Precio final: " + precio + " €");
                 intentradas = Integer.parseInt(nentradas);
 
                 horaentrada = bundle.getString("horaentradas");
@@ -149,19 +156,11 @@ public class SeleccionButacasFragment extends Fragment {
         binding.butacaG4.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
         binding.butacaG5.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { comprobarEntrada(v); }});
 
-        /*
-        binding.irabutacas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.seleccionButacasFragment);
-            }
-        });
-*/
 
         binding.pagarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(ne * 11.85f)), "EUR", titulo_peli, PayPalPayment.PAYMENT_INTENT_SALE);
+                thingToBuy = new PayPalPayment(new BigDecimal(precio), "EUR", titulo_peli, PayPalPayment.PAYMENT_INTENT_SALE);
 
                 Intent intent = new Intent(requireContext(), PaymentActivity.class);
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
