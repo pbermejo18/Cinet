@@ -160,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        elementosViewModel = new ViewModelProvider(this).get(PeliculasViewModel.class);
+        entradasHoraViewModel = new ViewModelProvider(this).get(EntradasHoraViewModel.class);
+
         if (resultCode == Activity.RESULT_OK) {
             PaymentConfirmation confirm = data
                     .getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
@@ -183,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
                             if (dataSnapshot.exists()) {
                                 try {
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("titulo").setValue(jsonObject_Pedido.getString("short_description").toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("entradas").setValue(entradasHoraViewModel.entradas_seleccionadas().getValue());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("hora_entradas").setValue(entradasHoraViewModel.hora_seleccionada().getValue());
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(jsonObject_Pedido.getString("amount").toString() + " " + jsonObject_Pedido.getString("currency_code").toString());
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("fecha").setValue(jsonObject_Response.getJSONObject("response").getString("create_time"));
                                     reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(user.getUid().toString());
@@ -199,9 +204,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Orden procesada",
                             Toast.LENGTH_LONG).show();
 
-
-                    elementosViewModel = new ViewModelProvider(this).get(PeliculasViewModel.class);
-                    entradasHoraViewModel = new ViewModelProvider(this).get(EntradasHoraViewModel.class);
 
                     database_entradas = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
                     reference_entradas = database.getReference("entradas").child(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));
