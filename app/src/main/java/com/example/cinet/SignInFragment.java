@@ -46,7 +46,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -195,6 +197,7 @@ public class SignInFragment extends Fragment {
     private void  comprobarUsuario(FirebaseUser currentUser) {
         DatabaseReference reference;
         FirebaseDatabase database;
+        List<String> list = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = database.getReference("usuarios");
@@ -205,14 +208,13 @@ public class SignInFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        // entradas disponibles
-                        if (!issue.getKey().equals(currentUser.getUid())) {
-                            reference.child(currentUser.getUid()).child("nombre").setValue(currentUser.getDisplayName());
-                            reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
-                            reference.child(currentUser.getUid()).child("movil").setValue("-");
-                            reference.child(currentUser.getUid()).child("fecha_de_nacimiento").setValue("-");
-                        }
-
+                        list.add(issue.getKey());
+                    }
+                    if (!list.contains(currentUser.getUid())) {
+                        reference.child(currentUser.getUid()).child("nombre").setValue(currentUser.getDisplayName());
+                        reference.child(currentUser.getUid()).child("email").setValue(currentUser.getEmail());
+                        reference.child(currentUser.getUid()).child("movil").setValue("-");
+                        reference.child(currentUser.getUid()).child("fecha_de_nacimiento").setValue("-");
                     }
                 }
             }
