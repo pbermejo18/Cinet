@@ -27,6 +27,12 @@ import com.example.cinet.databinding.FragmentSeleccionButacasBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -34,6 +40,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -41,7 +48,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-
+    DatabaseReference reference;
+    FirebaseDatabase database;
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
     private static final String CONFIG_CLIENT_ID = "AZS0Lo6_wtFnpeYf1K6NpF1Pe6W4gIOqpiy3UyPraIWRh8N4zRE1CNgqGfKISuFuEBqQfOgC6io9JCt_";
@@ -138,11 +146,40 @@ public class MainActivity extends AppCompatActivity {
                     .getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
             if (confirm != null) {
                 try {
-
-                    // informacion extra del pedido
+                    // informacion transación paypal
+                    JSONObject jsonObject_Response = confirm.toJSONObject();
                     System.out.println(confirm.toJSONObject().toString(4));
-                    System.out.println(confirm.getPayment().toJSONObject()
-                            .toString(4));
+                    /*
+                    {
+                         "amount": "11.85",
+                         "currency_code": "EUR",
+                         "short_description": "Top Gun: Maverick",
+                         "intent": "sale"
+                     }
+                     */
+                    JSONObject jsonObject_Pedido = confirm.getPayment().toJSONObject();
+                    System.out.println(confirm.getPayment().toJSONObject().toString(4));
+
+                    database = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/");
+                    reference = database.getReference("compras");
+
+                    Query query = reference;//.orderByChild("entrada");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                try {
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).setValue(confirm.getPayment().toString());
+                                    reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(jsonObject_Pedido.getString("amount").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
+                    });
 
                     Toast.makeText(getApplicationContext(), "Orden procesada",
                             Toast.LENGTH_LONG).show();

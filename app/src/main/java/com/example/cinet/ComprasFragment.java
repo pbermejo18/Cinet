@@ -56,31 +56,7 @@ public class ComprasFragment extends Fragment {
                         }
                     }
                 }
-                /*
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Compra us=snapshot.getValue(Compra.class);
-                    if(compra==null || usuario.getDosis()< us.getDosis()){
-                        usuario = us;
-                    }
-                }
-                Log.e("La mayor dosis es esta: " + usuario.getDosis());
-                 */
             }
-            /*
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot);
-                User user_data = dataSnapshot.getValue(User.class);
-                System.out.println(user_data);
-
-                assert user_data != null;
-                nombreEditText.setText(user_data.getNombre().toString());
-                emailEditText.setText(user_data.getEmail().toString());
-                movilEditText.setText(user_data.getMovil().toString());
-                fecha_nacimientoEditText.setText(user_data.getFecha_de_nacimiento().toString());
-            }
-
-             */
 
             @Override
             public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
