@@ -65,7 +65,7 @@ public class CinesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sobre_nosotros, container, false);
+        return inflater.inflate(R.layout.fragment_cines, container, false);
     }
 
     @Override
