@@ -23,7 +23,7 @@
     <item
         android:id="@+id/sobreNosotrosFragment2"
         android:icon="@drawable/info"
-        android:title="Sobre nosotros" />
+        android:title="Acerca de Cinet" />
 
     <item
         android:id="@+id/signOutFragment"

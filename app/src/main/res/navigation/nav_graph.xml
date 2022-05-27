@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/sobreNosotrosFragment2"
         android:name="com.example.cinet.SobreNosotrosFragment"
-        android:label="Sobre nosotros"
+        android:label="Acerca de Cinet"
         tools:layout="@layout/fragment_sobre_nosotros" />
     <fragment
         android:id="@+id/cinesFragment"
