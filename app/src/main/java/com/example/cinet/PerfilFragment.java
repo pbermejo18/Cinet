@@ -2,6 +2,7 @@ package com.example.cinet;
 
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -106,6 +108,7 @@ public class PerfilFragment extends Fragment {
                 nombreEditText.setFocusableInTouchMode(true);
                 nombreEditText.setLongClickable(true);
                 nombreEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                lapiz_nombre.setImageResource(R.drawable.lapiz_marcado);
             }
         });
 
@@ -117,6 +120,7 @@ public class PerfilFragment extends Fragment {
                 movilEditText.setFocusableInTouchMode(true);
                 movilEditText.setLongClickable(true);
                 movilEditText.setInputType(InputType.TYPE_CLASS_PHONE);
+                lapiz_movil.setImageResource(R.drawable.lapiz_marcado);
             }
         });
 
@@ -128,6 +132,7 @@ public class PerfilFragment extends Fragment {
                 fecha_nacimientoEditText.setFocusableInTouchMode(true);
                 fecha_nacimientoEditText.setLongClickable(true);
                 fecha_nacimientoEditText.setInputType(InputType.TYPE_CLASS_DATETIME);
+                lapiz_fecha_nacimiento.setImageResource(R.drawable.lapiz_marcado);
             }
         });
 
@@ -175,6 +180,26 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onCancelled(DatabaseError databaseError) { System.out.println("NO"); }
                 });
+                Toast toast = Toast.makeText(getActivity(), "Información actualizada", Toast.LENGTH_LONG);
+                toast.show();
+
+                nombreEditText.setFocusable(false);
+                nombreEditText.setClickable(false);
+                nombreEditText.setFocusableInTouchMode(false);
+                nombreEditText.setLongClickable(false);
+                lapiz_nombre.setImageResource(R.drawable.pen);
+
+                movilEditText.setFocusable(false);
+                movilEditText.setClickable(false);
+                movilEditText.setFocusableInTouchMode(false);
+                movilEditText.setLongClickable(false);
+                lapiz_movil.setImageResource(R.drawable.pen);
+
+                fecha_nacimientoEditText.setFocusable(false);
+                fecha_nacimientoEditText.setClickable(false);
+                fecha_nacimientoEditText.setFocusableInTouchMode(false);
+                fecha_nacimientoEditText.setLongClickable(false);
+                lapiz_fecha_nacimiento.setImageResource(R.drawable.pen);
             }
         });
 
