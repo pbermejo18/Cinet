@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         // draw menu
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 // Top-level destinations:
-                R.id.homeFragment, R.id.perfilFragment
+                R.id.homeFragment, R.id.perfilFragment, R.id.comprasFragment, R.id.cinesFragment, R.id.sobreNosotrosFragment2
         )
                 .setOpenableLayout(binding.drawerLayout)
                 .build();

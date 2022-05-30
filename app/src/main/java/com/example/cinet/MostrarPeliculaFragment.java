@@ -56,7 +56,36 @@ public class MostrarPeliculaFragment extends Fragment {
                 Glide.with(getContext()).load(pelicula.imagen).into(binding.image);
                 binding.nombre.setText(pelicula.titulo);
                 binding.descripcion.setText(pelicula.descripcion);
+                binding.tipo.setText(pelicula.tipo);
+                binding.productores.setText(pelicula.productores);
+                binding.reparto.setText(pelicula.reparto);
                 // binding.valoracion.setRating(elemento.valoracion);
+            }
+        });
+
+        binding.verSinopsis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (binding.descripcion.getVisibility() == View.VISIBLE)
+                binding.descripcion.setVisibility(View.GONE);
+                else binding.descripcion.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.verProductores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (binding.productores.getVisibility() == View.VISIBLE)
+                    binding.productores.setVisibility(View.GONE);
+                else binding.productores.setVisibility(View.VISIBLE);
+            }
+        });
+        binding.verReparto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (binding.reparto.getVisibility() == View.VISIBLE)
+                    binding.reparto.setVisibility(View.GONE);
+                else binding.reparto.setVisibility(View.VISIBLE);
             }
         });
 
