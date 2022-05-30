@@ -32,6 +32,7 @@ public class ProximosFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     PeliculasViewModel peliculasViewModel;
     FragmentProximosBinding binding;
+    CollectionViewModel collectionViewModel;
 
     public ProximosFragment() {}
 
@@ -47,6 +48,9 @@ public class ProximosFragment extends Fragment {
 
         // navController = Navigation.findNavController(view);  // <-----------------
         peliculasViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
+        collectionViewModel = new ViewModelProvider(requireActivity()).get(CollectionViewModel.class);
+
+        collectionViewModel.seleccionar("peliculas");
 
         if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
             binding.addFloatButton.setVisibility(View.VISIBLE);

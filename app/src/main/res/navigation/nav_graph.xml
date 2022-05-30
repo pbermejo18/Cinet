@@ -80,4 +80,9 @@
         android:name="com.example.cinet.ComprasFragment"
         android:label="Compras"
         tools:layout="@layout/fragment_compras" />
+    <fragment
+        android:id="@+id/nueva_peli_carteleraFragment"
+        android:name="com.example.cinet.Nueva_peli_carteleraFragment"
+        android:label="Añadir película"
+        tools:layout="@layout/fragment_nueva_peli_cartelera" />
 </navigation>
