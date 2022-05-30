@@ -85,4 +85,9 @@
         android:name="com.example.cinet.Nueva_peli_carteleraFragment"
         android:label="Añadir película"
         tools:layout="@layout/fragment_nueva_peli_cartelera" />
+    <fragment
+        android:id="@+id/nueva_peli_estrenosFragment"
+        android:name="com.example.cinet.Nueva_peli_estrenosFragment"
+        android:label="Añadir película"
+        tools:layout="@layout/fragment_nueva_peli_estrenos" />
 </navigation>

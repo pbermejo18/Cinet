@@ -30,7 +30,6 @@ public class CarteleraFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     PeliculasViewModel peliculasViewModel;
     FragmentCarteleraBinding binding;
-    CollectionViewModel collectionViewModel;
 
     public CarteleraFragment() {}
 
@@ -46,9 +45,6 @@ public class CarteleraFragment extends Fragment {
 
         // navController = Navigation.findNavController(view);  // <-----------------
         peliculasViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
-        collectionViewModel = new ViewModelProvider(requireActivity()).get(CollectionViewModel.class);
-
-        collectionViewModel.seleccionar("cartelera");
 
         if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
             binding.addFloatButton.setVisibility(View.VISIBLE);
@@ -92,7 +88,7 @@ public class CarteleraFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    peliculasViewModel.seleccionar(post, getSnapshots().getSnapshot(holder.getAdapterPosition()).getId().toString()); //
+                    peliculasViewModel.seleccionar(post, getSnapshots().getSnapshot(holder.getAdapterPosition()).getId().toString(), "cartelera"); //
                     navController = Navigation.findNavController(v);
                     navController.navigate(R.id.mostrarPeliculaFragment);
                 }

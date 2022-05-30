@@ -39,7 +39,6 @@ public class MostrarPeliculaFragment extends Fragment {
     FragmentMostrarPeliculaBinding binding;
     PeliculasViewModel elementosViewModel;
     NavController navController;
-    CollectionViewModel collectionViewModel;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -54,14 +53,13 @@ public class MostrarPeliculaFragment extends Fragment {
          //= new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
         navController = Navigation.findNavController(view);
         elementosViewModel = new ViewModelProvider(requireActivity()).get(PeliculasViewModel.class);
-        collectionViewModel = new ViewModelProvider(requireActivity()).get(CollectionViewModel.class);
 
         if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admincinet@yopmail.com")) {
             binding.deleteFloatButton.setVisibility(View.VISIBLE);
             binding.deleteFloatButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FirebaseFirestore.getInstance().collection(Objects.requireNonNull(collectionViewModel.colecion_seleccionada().getValue())).document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue())).delete();
+                    FirebaseFirestore.getInstance().collection(elementosViewModel.colecion_seleccionada().getValue()).document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue())).delete();
                 }
             });
         }
