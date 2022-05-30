@@ -14,18 +14,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.WriteResult;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class MostrarPeliculaFragment extends Fragment {
     FragmentMostrarPeliculaBinding binding;
     PeliculasViewModel elementosViewModel;
     NavController navController;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +77,34 @@ public class MostrarPeliculaFragment extends Fragment {
             }
         });
 
+        FirebaseFirestore.getInstance().collection("peliculas").orderBy("ratings")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                /*binding.valoracion.setRating(Float.parseFloat(document.getData().values()));*/
+                                if (document.getData().containsValue(user.getUid())) {
+                                    System.out.println("dhsfbhjsdbfhsbhjdfbhjsdfb" + document.getData());
+                                }
+                            }
+                        } else {
+                            System.out.println("))))))))))))))))))))))))))))))))))))))))))))))))))))))9");
+                        }
+                    }
+                });
+
+        binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                DocumentReference docRef = FirebaseFirestore.getInstance().collection("peliculas").document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));
+                docRef.update("ratings."+user.getUid(), String.valueOf(rating));
+
+                Toast toast = Toast.makeText(getActivity(), String.valueOf(rating), Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
         binding.verSinopsis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

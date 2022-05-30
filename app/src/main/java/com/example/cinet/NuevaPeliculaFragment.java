@@ -47,7 +47,7 @@ public class NuevaPeliculaFragment extends Fragment {
     public AppViewModel appViewModel;
     NavController navController;
     Button publishButton;
-    EditText tituloEditText, descripcionEditText;
+    EditText tituloEditText, descripcionEditText, postTipoEditText, postProductoresEditText, postRepartoEditText;
     String titulo, descripcion;
     public Uri mediaUri;
     public String mediaTipo;
@@ -70,9 +70,13 @@ public class NuevaPeliculaFragment extends Fragment {
         publishButton = view.findViewById(R.id.publishButton);
         tituloEditText = view.findViewById(R.id.tituloEditText);
         descripcionEditText = view.findViewById(R.id.postContentEditText);
+        postTipoEditText = view.findViewById(R.id.postTipo);
+        postProductoresEditText = view.findViewById(R.id.postProductores);
+        postRepartoEditText = view.findViewById(R.id.postReparto);
 
         titulo = tituloEditText.getText().toString();
         descripcion = descripcionEditText.getText().toString();
+
 
         mDatabase = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
 
@@ -133,6 +137,9 @@ public class NuevaPeliculaFragment extends Fragment {
     private void publicar() {
         String postTitulo = tituloEditText.getText().toString();
         String postDescription = descripcionEditText.getText().toString();
+        String tipo = postTipoEditText.getText().toString();
+        String productores = postProductoresEditText.getText().toString();
+        String reparto = postRepartoEditText.getText().toString();
 
         if(TextUtils.isEmpty(postTitulo) || TextUtils.isEmpty(postDescription)){
             tituloEditText.setError("Required");
@@ -146,12 +153,12 @@ public class NuevaPeliculaFragment extends Fragment {
         }
         else {
             publishButton.setEnabled(false);
-            pujaIguardarEnFirestore(postTitulo, postDescription);
+            pujaIguardarEnFirestore(postTitulo, postDescription, tipo, productores, reparto);
         }
     }
 
-    private void guardarEnFirestore(String titulo, String descripcion, String mediaUrl) {
-        Post post = new Post(mediaUrl, titulo, descripcion);
+    private void guardarEnFirestore(String titulo, String descripcion, String mediaUrl, String tipo, String productores, String reparto) {
+        Post post = new Post(mediaUrl, titulo, descripcion, tipo, productores, reparto);
         FirebaseFirestore.getInstance().collection("peliculas")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -169,19 +176,12 @@ public class NuevaPeliculaFragment extends Fragment {
                 });
     }
 
-    private void pujaIguardarEnFirestore(final String titulo, String descripcion) {
+    private void pujaIguardarEnFirestore(final String titulo, String descripcion, String tipo, String productores, String reparto) {
         FirebaseStorage.getInstance().getReference(mediaTipo + "/" +
                 UUID.randomUUID())
                 .putFile(mediaUri)
                 .continueWithTask(task ->
                         task.getResult().getStorage().getDownloadUrl())
-                .addOnSuccessListener(url -> guardarEnFirestore(titulo, descripcion, url.toString()));
-/*
-        mDatabase.child("entradas").child().child("14:00 - 15:50").setValue(38);
-        mDatabase.child("entradas").child("pol").child("16:00 - 17:50").setValue(38);
-        mDatabase.child("entradas").child("pol").child("18:05 - 19:55").setValue(38);
-        mDatabase.child("entradas").child("pol").child("20:10 - 22:00").setValue(38);
-        mDatabase.child("entradas").child("pol").child("22:05 - 23:55").setValue(38);
- */
+                .addOnSuccessListener(url -> guardarEnFirestore(titulo, descripcion, url.toString(), tipo, productores, reparto));
     }
 }
