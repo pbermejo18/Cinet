@@ -87,7 +87,6 @@ public class NuevaPeliculaFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.camara_fotos).setOnClickListener(v -> tomarFoto());
         view.findViewById(R.id.imagen_galeria).setOnClickListener(v -> seleccionarImagen());
         appViewModel.mediaSeleccionado.observe(getViewLifecycleOwner(), media -> {
             this.mediaUri = media.uri;
@@ -100,39 +99,11 @@ public class NuevaPeliculaFragment extends Fragment {
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
             });
-    private final ActivityResultLauncher<Uri> camaraFotos =
-            registerForActivityResult(new ActivityResultContracts.TakePicture(),
-                    isSuccess -> {
-                        appViewModel.setMediaSeleccionado(mediaUri, "image");
-                    });
-    private final ActivityResultLauncher<Uri> camaraVideos =
-            registerForActivityResult(new ActivityResultContracts.TakeVideo(), isSuccess
-                    -> {
-                appViewModel.setMediaSeleccionado(mediaUri, "video");
-            });
-    private final ActivityResultLauncher<Intent> grabadoraAudio =
-            registerForActivityResult(new
-                    ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    appViewModel.setMediaSeleccionado(result.getData().getData(),
-                            "audio");
-                }
-            });
+
     private void seleccionarImagen() {
         mediaTipo = "image";
         galeria.launch("image/*");
     }
-
-    private void tomarFoto() {
-        try {
-            mediaUri = FileProvider.getUriForFile(requireContext(),
-                    BuildConfig.APPLICATION_ID + ".fileprovider", File.createTempFile("img",
-                            ".jpg",
-                            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
-            camaraFotos.launch(mediaUri);
-        } catch (IOException e) { System.out.println(e.getMessage()); }
-    }
-
 
     private void publicar() {
         String postTitulo = tituloEditText.getText().toString();
