@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     PeliculasViewModel elementosViewModel;
     NavController navController;
     EntradasHoraViewModel entradasHoraViewModel;
+    String usr;
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                                 .into(photo);
                         name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        usr = FirebaseAuth.getInstance().getUid();
                     } else {
                         Glide.with(MainActivity.this)
                                 .load(R.drawable.perfil)
@@ -188,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("hora_entradas").setValue(entradasHoraViewModel.hora_seleccionada().getValue());
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(precio_final + " " + jsonObject_Pedido.getString("currency_code").toString());
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("fecha").setValue(jsonObject_Response.getJSONObject("response").getString("create_time"));
-                                        reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(user.getUid().toString());
+                                        reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(usr);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
