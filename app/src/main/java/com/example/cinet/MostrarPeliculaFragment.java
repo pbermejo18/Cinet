@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.cinet.databinding.FragmentMostrarPeliculaBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,32 +78,43 @@ public class MostrarPeliculaFragment extends Fragment {
             }
         });
 
-        FirebaseFirestore.getInstance().collection("peliculas").orderBy("ratings")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                /*binding.valoracion.setRating(Float.parseFloat(document.getData().values()));*/
-                                if (document.getData().containsValue(user.getUid())) {
-                                    System.out.println("dhsfbhjsdbfhsbhjdfbhjsdfb" + document.getData());
-                                }
-                            }
-                        } else {
-                            System.out.println("))))))))))))))))))))))))))))))))))))))))))))))))))))))9");
-                        }
-                    }
-                });
+        FirebaseFirestore.getInstance().collection(Objects.requireNonNull(elementosViewModel.colecion_seleccionada().getValue())).document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue())).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.contains("ratings")) {
+                    String str = (String) documentSnapshot.get("ratings." + user.getUid().toString());
+                    //System.out.println(documentSnapshot.get("ratings."+user.getUid().toString()));
+                    System.out.println(str + "sdvn");
+                    assert str != null;
+                    float valoracion = Float.parseFloat(str);
+                    binding.valoracion.setRating(valoracion);
+                }
+            }
+        });
 
         binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                DocumentReference docRef = FirebaseFirestore.getInstance().collection("peliculas").document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));
+                DocumentReference docRef = FirebaseFirestore.getInstance().collection(Objects.requireNonNull(elementosViewModel.colecion_seleccionada().getValue())).document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue()));
                 docRef.update("ratings."+user.getUid(), String.valueOf(rating));
 
-                Toast toast = Toast.makeText(getActivity(), String.valueOf(rating), Toast.LENGTH_LONG);
-                toast.show();
+                // Toast toast = Toast.makeText(getActivity(), String.valueOf(rating), Toast.LENGTH_LONG);
+                // toast.show();
+
+
+                FirebaseFirestore.getInstance().collection(Objects.requireNonNull(elementosViewModel.colecion_seleccionada().getValue())).document(Objects.requireNonNull(elementosViewModel.id_doc_seleccionado().getValue())).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.contains("ratings")) {
+                            String str = (String) documentSnapshot.get("ratings." + user.getUid().toString());
+                            //System.out.println(documentSnapshot.get("ratings."+user.getUid().toString()));
+                            System.out.println(str + "sdvn");
+                            assert str != null;
+                            float valoracion = Float.parseFloat(str);
+                            binding.valoracion.setRating(valoracion);
+                        }
+                    }
+                });
             }
         });
         binding.verSinopsis.setOnClickListener(new View.OnClickListener() {
