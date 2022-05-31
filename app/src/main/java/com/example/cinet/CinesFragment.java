@@ -41,12 +41,27 @@ public class CinesFragment extends Fragment {
             LatLng cinet_Magic = new LatLng(41.44344182223131, 2.229998153709825);
             LatLng cinet_Diagonal = new LatLng(41.41039893822629, 2.216464073430923);
             LatLng cinet_glories = new LatLng(41.40811016274522, 2.192440875301859);
+            LatLng cinet_experience = new LatLng(41.41347716616296, 2.173130568480523);
+            LatLng cinet_renoir = new LatLng(41.38669406198077, 2.162144239785664);
+            LatLng cinet_cinema = new LatLng(41.398026722349385, 2.152874524949368);
+            LatLng balmes_cinet = new LatLng(41.41064485994699, 2.1384549717428656);
+            LatLng cinet_diagonal = new LatLng(41.39931439959538, 2.135365065782355);
+            LatLng cinet_verdi = new LatLng(41.41012988253883, 2.156651078358803);
+            LatLng cinet_cinema2 = new LatLng(41.394678642247925, 2.1988797787276426);
+            LatLng cinet_cinema3 = new LatLng(41.40472236603313, 2.1659207926430373);
 
             googleMap.addMarker(new MarkerOptions().position(cinet_Maquinista).title("Cinet la Maquinista"));
             googleMap.addMarker(new MarkerOptions().position(cinet_Magic).title("Cinet Màgic Badalona"));
             googleMap.addMarker(new MarkerOptions().position(cinet_Diagonal).title("Cinet Diagonal Mar"));
             googleMap.addMarker(new MarkerOptions().position(cinet_glories).title("Cinet Glòries"));
-
+            googleMap.addMarker(new MarkerOptions().position(cinet_experience).title("Cinet Experience"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_renoir).title("Cinet Renoir"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_cinema).title("Cinet Cinema"));
+            googleMap.addMarker(new MarkerOptions().position(balmes_cinet).title("Balmes Cinet"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_diagonal).title("Cinet Diagonal"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_verdi).title("Cinet Verdi"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_cinema2).title("Cinet Cinema"));
+            googleMap.addMarker(new MarkerOptions().position(cinet_cinema3).title("Cinet Cinema"));
 
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setCompassEnabled(true);
