@@ -85,9 +85,11 @@ public class MostrarPeliculaFragment extends Fragment {
                     String str = (String) documentSnapshot.get("ratings." + user.getUid().toString());
                     //System.out.println(documentSnapshot.get("ratings."+user.getUid().toString()));
                     System.out.println(str + "sdvn");
-                    assert str != null;
-                    float valoracion = Float.parseFloat(str);
-                    binding.valoracion.setRating(valoracion);
+                    // assert str != null;
+                    if (str != null) {
+                        float valoracion = Float.parseFloat(str);
+                        binding.valoracion.setRating(valoracion);
+                    }
                 }
             }
         });

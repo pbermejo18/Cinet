@@ -31,26 +31,5 @@ public class PeliculasViewModel extends AndroidViewModel {
         System.out.println(id_seleccionado.getValue());return id_seleccionado;
     }
     MutableLiveData<String> colecion_seleccionada(){ return colecion_seleccionado; }
-/*
-    public PeliculasViewModel(@NonNull Application application) {
-        super(application);
 
-        elementosRepositorio = new ElementosRepositorio();
-
-        listElementosMutableLiveData.setValue(elementosRepositorio.obtener());
-    }
-
-    MutableLiveData<List<Pelicula>> obtener(){
-        return listElementosMutableLiveData;
-    }
-
-    void seleccionar(Pelicula elemento){
-        elementoSeleccionado.setValue(elemento);
-    }
-
-    MutableLiveData<Pelicula> seleccionado(){
-        return elementoSeleccionado;
-    }
-
- */
 }
