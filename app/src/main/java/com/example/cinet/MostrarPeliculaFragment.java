@@ -84,7 +84,7 @@ public class MostrarPeliculaFragment extends Fragment {
                 if (documentSnapshot.contains("ratings")) {
                     String str = (String) documentSnapshot.get("ratings." + user.getUid().toString());
                     //System.out.println(documentSnapshot.get("ratings."+user.getUid().toString()));
-                    System.out.println(str + "sdvn");
+                    System.out.println(str + "sdvn" + user.getUid());
                     // assert str != null;
                     if (str != null) {
                         float valoracion = Float.parseFloat(str);

@@ -202,7 +202,7 @@
         app:srcCompat="@drawable/entradas"
         app:tint="#EEE" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/irAPantallaComida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
         app:layout_constraintEnd_toStartOf="@+id/irAPantallaComprarEntrada"
         app:layout_constraintTop_toBottomOf="@+id/productores"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/popcorn" />
+        app:srcCompat="@drawable/popcorn" /> -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_float_button"

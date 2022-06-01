@@ -144,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
                                 .into(photo);
                         name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        usr = FirebaseAuth.getInstance().getUid();
                     }
                 }
             }
         });
+        System.out.println("USUARIO " + usr + "********************");
     }
 
     // Metodos para Paypal
