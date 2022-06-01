@@ -49,7 +49,8 @@ public class ComprasFragment extends Fragment {
     public List<Compra> list;
     // List<String> elementos = new ArrayList<>();
     ElementosAdapter elementosAdapter = new ElementosAdapter();
-
+    ComprasViewModel comprasViewModel;
+    NavController navController;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -62,7 +63,7 @@ public class ComprasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         reference = FirebaseDatabase.getInstance("https://cinet-cc0f5-default-rtdb.europe-west1.firebasedatabase.app/").getReference("compras");
-
+        comprasViewModel = new ViewModelProvider(requireActivity()).get(ComprasViewModel.class);
         list = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -130,6 +131,15 @@ public class ComprasFragment extends Fragment {
             holder.binding.entradas.setText("Entradas: " + elemento.getEntradas());
             holder.binding.hora.setText(elemento.getHora_entradas());
             holder.binding.precio.setText(elemento.getPrecio());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    comprasViewModel.seleccionar(elemento); //
+                    navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.QRFragment);
+                }
+            });
         }
 
         @Override

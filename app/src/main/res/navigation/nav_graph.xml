@@ -90,4 +90,9 @@
         android:name="com.example.cinet.Nueva_peli_estrenosFragment"
         android:label="Añadir película"
         tools:layout="@layout/fragment_nueva_peli_estrenos" />
+    <fragment
+        android:id="@+id/QRFragment"
+        android:name="com.example.cinet.QRFragment"
+        android:label="Código QR"
+        tools:layout="@layout/fragment_q_r" />
 </navigation>

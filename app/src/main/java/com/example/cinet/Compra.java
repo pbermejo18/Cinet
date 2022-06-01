@@ -2,18 +2,27 @@ package com.example.cinet;
 
 public class Compra {
     // boolean aperitivos;
-    String entradas, fecha, hora_entradas, precio, titulo, uid;
+    String entradas, fecha, hora_entradas, precio, titulo, uid, id_compra;
     // Long entradas;
 
     public Compra() { }
 
-    public Compra(String entradas, String fecha, String hora_entradas, String precio, String titulo, String uid) {
+    public Compra(String entradas, String fecha, String hora_entradas, String precio, String titulo, String uid, String id_compra) {
         this.entradas = entradas;
         this.fecha = fecha;
         this.hora_entradas = hora_entradas;
         this.precio = precio;
         this.titulo = titulo;
         this.uid = uid;
+        this.id_compra = id_compra;
+    }
+
+    public String getId_compra() {
+        return id_compra;
+    }
+
+    public void setId_compra(String id_compra) {
+        this.id_compra = id_compra;
     }
 
     public String getEntradas() {

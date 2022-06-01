@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("precio").setValue(precio_final + " " + jsonObject_Pedido.getString("currency_code").toString());
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("fecha").setValue(jsonObject_Response.getJSONObject("response").getString("create_time"));
                                         reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("uid").setValue(usr);
+                                        reference.child(jsonObject_Response.getJSONObject("response").getString("id")).child("id_compra").setValue(jsonObject_Response.getJSONObject("response").getString("id"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
