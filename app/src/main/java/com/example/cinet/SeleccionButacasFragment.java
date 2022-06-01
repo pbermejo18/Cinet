@@ -160,12 +160,17 @@ public class SeleccionButacasFragment extends Fragment {
         binding.pagarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thingToBuy = new PayPalPayment(new BigDecimal(precio), "EUR", titulo_peli, PayPalPayment.PAYMENT_INTENT_SALE);
+                if (intentradas == 0) {
+                    thingToBuy = new PayPalPayment(new BigDecimal(precio), "EUR", titulo_peli, PayPalPayment.PAYMENT_INTENT_SALE);
 
-                Intent intent = new Intent(requireContext(), PaymentActivity.class);
-                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+                    Intent intent = new Intent(requireContext(), PaymentActivity.class);
+                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                } else {
+                    Toast toast = Toast.makeText(getActivity(), "Debes seleccionar "+intentradas+" butacas más.", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
     }
